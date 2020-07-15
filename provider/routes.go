@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -24,6 +23,8 @@ func auth(next http.Handler) http.Handler {
 			// if isAuth, access := jwtauth.VerifyToken(bearToken); isAuth {
 			// 	fmt.Println(access.Login)
 			// 	request = jwtauth.SetContextData(request, &access)
+			request.URL.Scheme = "https"
+
 			next.ServeHTTP(response, request)
 			// } else {
 			// 	response.WriteHeader(http.StatusUnauthorized)
@@ -58,7 +59,7 @@ func Routes() *mux.Router {
 			fmt.Println(n[0], t, route.GetName())
 
 			link := Link{
-				Href:   fmt.Sprintf("%s://%s%s", strings.ToLower(strings.Split(request.Proto, "/")[0]), request.Host, t),
+				Href:   fmt.Sprintf("%s://%s%s", request.URL.Scheme, request.Host, t),
 				Method: n[0],
 				Path:   route.GetName(),
 			}
