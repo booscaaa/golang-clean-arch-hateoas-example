@@ -5,6 +5,7 @@ type Item struct {
 	Nome      string `json:"nome"`
 	Descricao string `json:"descricao"`
 	Data      string `json:"data"`
+	Sigla     string `json:"sigla"`
 	Links     []Link `json:"links"`
 }
 

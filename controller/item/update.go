@@ -33,8 +33,10 @@ func Update(response http.ResponseWriter, request *http.Request) {
 			return
 		}
 		stmt, err := tx.Prepare(
-			`	UPDATE item SET nome = $1, descricao = $2, data =  to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS')
-				WHERE id = $4 returning *;	`)
+			`	UPDATE item SET 
+				nome = $1, descricao = $2, 
+				data =  to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS')
+				WHERE id = $4 and sigla = $5 returning *;	`)
 
 		e, isEr = handler.CheckErr(err)
 
@@ -50,11 +52,13 @@ func Update(response http.ResponseWriter, request *http.Request) {
 			i.Descricao,
 			i.Data,
 			i.ID,
+			i.Sigla,
 		).Scan(
 			&item.ID,
 			&item.Nome,
 			&item.Descricao,
 			&item.Data,
+			&item.Sigla,
 		)
 
 		e, isEr = handler.CheckErr(err)

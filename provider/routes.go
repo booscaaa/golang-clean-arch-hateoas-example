@@ -37,11 +37,16 @@ func auth(next http.Handler) http.Handler {
 func Routes() *mux.Router {
 	r := mux.NewRouter()
 
-	r.Handle("/item", auth(http.HandlerFunc(item.Index))).Methods("GET", "OPTIONS").Name("/item")
+	// r.Handle("/item", auth(http.HandlerFunc(item.Index))).Methods("GET", "OPTIONS").Name("/item")
 	r.Handle("/item", auth(http.HandlerFunc(item.Create))).Methods("POST", "OPTIONS").Name("/item")
 	r.Handle("/item/{id}", auth(http.HandlerFunc(item.Update))).Methods("PUT", "OPTIONS").Name("/item")
 	r.Handle("/item/{id}", auth(http.HandlerFunc(item.Get))).Methods("GET", "OPTIONS").Name("/item")
 	r.Handle("/item/{id}", auth(http.HandlerFunc(item.Delete))).Methods("DELETE", "OPTIONS").Name("/item")
+
+	r.Handle("/item", auth(http.HandlerFunc(item.Index))).Queries(
+		"sigla", "{sigla}",
+	).Methods("GET", "OPTIONS")
+
 	r.Handle("/", auth(http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
 		var links []Link
 		var nomes []Nome

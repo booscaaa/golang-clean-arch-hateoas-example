@@ -20,7 +20,7 @@ func Get(response http.ResponseWriter, request *http.Request) {
 
 	{
 		rows, err := db.Query(
-			`	SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY HH24:MI:SS') FROM item where id = $1 ORDER BY data asc;	`, id,
+			`	SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY HH24:MI:SS'), sigla FROM item where id = $1 ORDER BY data asc;	`, id,
 		)
 		e, isEr := handler.CheckErr(err)
 

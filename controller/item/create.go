@@ -31,7 +31,7 @@ func Create(response http.ResponseWriter, request *http.Request) {
 			response.Write(e.ReturnError())
 			return
 		}
-		stmt, err := tx.Prepare(`INSERT INTO item (nome, descricao, data) VALUES ($1, $2, to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS')) returning *;`)
+		stmt, err := tx.Prepare(`INSERT INTO item (nome, descricao, data, sigla) VALUES ($1, $2, to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS'), $4) returning *;`)
 
 		e, isEr = handler.CheckErr(err)
 
@@ -46,11 +46,13 @@ func Create(response http.ResponseWriter, request *http.Request) {
 			i.Nome,
 			i.Descricao,
 			i.Data,
+			i.Sigla,
 		).Scan(
 			&item.ID,
 			&item.Nome,
 			&item.Descricao,
 			&item.Data,
+			&item.Sigla,
 		)
 
 		e, isEr = handler.CheckErr(err)

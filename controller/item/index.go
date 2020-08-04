@@ -14,11 +14,14 @@ func Index(response http.ResponseWriter, request *http.Request) {
 	defer db.Close()
 	item := Item{}
 
+	item.Sigla = request.FormValue("sigla")
+
 	var itens []Item
 
 	{
 		rows, err := db.Query(
-			`	SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY HH24:MI:SS') FROM item ORDER BY data asc;	`,
+			`	SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY HH24:MI:SS'), sigla FROM item where sigla = $1 ORDER BY data asc;	`,
+			item.Sigla,
 		)
 		e, isEr := handler.CheckErr(err)
 
@@ -34,6 +37,7 @@ func Index(response http.ResponseWriter, request *http.Request) {
 				&item.Nome,
 				&item.Descricao,
 				&item.Data,
+				&item.Sigla,
 			)
 			e, isEr := handler.CheckErr(err)
 
