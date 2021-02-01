@@ -2,8 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
-
 	"github.com/lib/pq"
 )
 
@@ -35,21 +33,16 @@ func CheckErr(err error) (MyError, bool) {
 			e.Message = "Não foi possível excluir o registro, ele está referenciado em outro local. Verifique os outros cadastros."
 			break
 		}
-
-		fmt.Println(e)
 		return e, true
 	}
 
 	if err != nil {
-		fmt.Println(err)
 		e := MyError{
 			InternalQuery: err,
 			Code:          "171097",
 			Error:         err.Error(),
 			Message:       "Algo de estranho ocorreu agora!",
 		}
-
-		fmt.Println(e)
 		return e, true
 	}
 	e := MyError{

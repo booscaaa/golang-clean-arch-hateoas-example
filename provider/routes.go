@@ -19,17 +19,7 @@ func auth(next http.Handler) http.Handler {
 		if request.Method == "OPTIONS" {
 			response.WriteHeader(http.StatusOK)
 		} else {
-			// bearToken := request.Header.Get("Authorization") // bear token must be 2 params -- Bearer <token>
-			// if isAuth, access := jwtauth.VerifyToken(bearToken); isAuth {
-			// 	fmt.Println(access.Login)
-			// 	request = jwtauth.SetContextData(request, &access)
-			request.URL.Scheme = "https"
-
 			next.ServeHTTP(response, request)
-			// } else {
-			// 	response.WriteHeader(http.StatusUnauthorized)
-			// 	response.Write(jwtauth.ReturnMessage("Acesso negado"))
-			// }
 		}
 	})
 }
@@ -61,10 +51,9 @@ func Routes() *mux.Router {
 			if e != nil {
 				return err
 			}
-			fmt.Println(n[0], t, route.GetName())
 
 			link := Link{
-				Href:   fmt.Sprintf("%s://%s%s", request.URL.Scheme, request.Host, t),
+				Href:   fmt.Sprintf("%s%s", request.Host, t),
 				Method: n[0],
 				Path:   route.GetName(),
 			}
@@ -77,11 +66,9 @@ func Routes() *mux.Router {
 		for _, link := range links {
 			teste := false
 			for i, nome := range nomes {
-				fmt.Println(link.Path, nome.Path)
 				if link.Path == nome.Path {
 					nome.Links = append(nome.Links, link)
 					teste = true
-					fmt.Println("aqui")
 				}
 				nomes[i] = nome
 			}
@@ -89,8 +76,6 @@ func Routes() *mux.Router {
 				nomes = append(nomes, Nome{Path: link.Path, Links: []Link{link}})
 			}
 		}
-
-		fmt.Println(nomes)
 
 		payload, _ := json.Marshal(nomes)
 		response.Write(payload)

@@ -25,6 +25,5 @@ func main() {
 	}
 
 	r := Routes()
-	fmt.Println("3333")
 	fmt.Println(http.ListenAndServe(fmt.Sprintf(":%s", port), handlers.CompressHandler(r)))
 }

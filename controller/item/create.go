@@ -4,7 +4,6 @@ import (
 	"api/factory"
 	"api/handler"
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -18,8 +17,6 @@ func Create(response http.ResponseWriter, request *http.Request) {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte("500 - Something bad happened!"))
 	}
-
-	fmt.Println(i)
 
 	{
 		tx, err := db.Begin()

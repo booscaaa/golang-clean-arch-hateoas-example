@@ -36,6 +36,7 @@ func Get(response http.ResponseWriter, request *http.Request) {
 				&item.Nome,
 				&item.Descricao,
 				&item.Data,
+				&item.Sigla,
 			)
 			e, isEr := handler.CheckErr(err)
 
