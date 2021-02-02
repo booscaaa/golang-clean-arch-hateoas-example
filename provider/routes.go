@@ -1,10 +1,11 @@
 package provider
 
 import (
-	"api/controller/item"
-	"encoding/json"
-	"fmt"
 	"net/http"
+
+	"golang-restfull-hateoas-example/factory"
+	"golang-restfull-hateoas-example/module/item/data/repository"
+	"golang-restfull-hateoas-example/module/item/domain/usecase"
 
 	"github.com/gorilla/mux"
 )
@@ -27,71 +28,17 @@ func auth(next http.Handler) http.Handler {
 func Routes() *mux.Router {
 	r := mux.NewRouter()
 
-	// r.Handle("/item", auth(http.HandlerFunc(item.Index))).Methods("GET", "OPTIONS").Name("/item")
-	r.Handle("/item", auth(http.HandlerFunc(item.Create))).Methods("POST", "OPTIONS").Name("/item")
-	r.Handle("/item/{id}", auth(http.HandlerFunc(item.Update))).Methods("PUT", "OPTIONS").Name("/item")
-	r.Handle("/item/{id}", auth(http.HandlerFunc(item.Get))).Methods("GET", "OPTIONS").Name("/item")
-	r.Handle("/item/{id}", auth(http.HandlerFunc(item.Delete))).Methods("DELETE", "OPTIONS").Name("/item")
+	connection := factory.GetConnection()
+	itemRepository := repository.ItemRepositoryImpl(connection)
+	itemUseCase := usecase.ItemUseCaseImpl(itemRepository)
 
-	r.Handle("/item", auth(http.HandlerFunc(item.Index))).Queries(
+	r.Handle("/item/{id}", auth(http.HandlerFunc(itemUseCase.Update))).Methods("PUT", "OPTIONS").Name("/item")
+	r.Handle("/item/{id}", auth(http.HandlerFunc(itemUseCase.GetByID))).Methods("GET", "OPTIONS").Name("/item")
+	r.Handle("/item/{id}", auth(http.HandlerFunc(itemUseCase.Delete))).Methods("DELETE", "OPTIONS").Name("/item")
+
+	r.Handle("/item", auth(http.HandlerFunc(itemUseCase.Fetch))).Queries(
 		"sigla", "{sigla}",
 	).Methods("GET", "OPTIONS")
 
-	r.Handle("/", auth(http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
-		var links []Link
-		var nomes []Nome
-
-		r.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
-			t, err := route.GetPathTemplate()
-			if err != nil {
-				return err
-			}
-
-			n, e := route.GetMethods()
-			if e != nil {
-				return err
-			}
-
-			link := Link{
-				Href:   fmt.Sprintf("%s%s", request.Host, t),
-				Method: n[0],
-				Path:   route.GetName(),
-			}
-
-			links = append(links, link)
-
-			return nil
-		})
-
-		for _, link := range links {
-			teste := false
-			for i, nome := range nomes {
-				if link.Path == nome.Path {
-					nome.Links = append(nome.Links, link)
-					teste = true
-				}
-				nomes[i] = nome
-			}
-			if !teste {
-				nomes = append(nomes, Nome{Path: link.Path, Links: []Link{link}})
-			}
-		}
-
-		payload, _ := json.Marshal(nomes)
-		response.Write(payload)
-
-	}))).Methods("GET", "OPTIONS").Name("/")
-
 	return r
-}
-
-type Nome struct {
-	Path  string `json:"path"`
-	Links []Link `json:"links"`
-}
-
-type Link struct {
-	Path   string `json:"path"`
-	Href   string `json:"href"`
-	Method string `json:"method"`
 }

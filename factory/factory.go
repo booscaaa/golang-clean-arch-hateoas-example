@@ -8,31 +8,30 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func GetConnection() *sql.DB {
+type Connection struct {
+	dbinfo string
+}
+
+func GetConnection() Connection {
+	connection := Connection{}
+
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
 	bdPassword := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
 
-	dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s",
+	connection.dbinfo = fmt.Sprintf("host=%s user=%s password=%s dbname=%s",
 		dbHost, dbUser, bdPassword, dbName)
+	return connection
 
-	db, err := sql.Open("postgres", dbinfo)
-	checkErr(err)
-	return db
+	// sql.Open("postgres", dbinfo)
 }
 
-func GetConnectionSchema(schema string) *sql.DB {
-	dbHost := os.Getenv("DB_HOST")
-	dbUser := os.Getenv("DB_USER")
-	dbPassword := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
+func (connection Connection) Open() *sql.DB {
+	db, err := sql.Open("postgres", connection.dbinfo)
 
-	dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s search_path=%s,public",
-		dbHost, dbUser, dbPassword, dbName, schema)
-
-	db, err := sql.Open("postgres", dbinfo)
 	checkErr(err)
+
 	return db
 }
 

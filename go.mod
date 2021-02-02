@@ -1,14 +1,11 @@
-module api
+module golang-restfull-hateoas-example
 
-go 1.13
+go 1.15
 
 require (
-	github.com/gorilla/handlers v1.4.2
-	github.com/gorilla/mux v1.7.4
-	github.com/joho/godotenv v1.3.0
-	github.com/lib/pq v1.7.0
-	github.com/ompluscator/dynamic-struct v1.2.0 // indirect
-	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
-	google.golang.org/api v0.28.0
-	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
+	github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef
+	github.com/gorilla/handlers v1.5.1 // indirect
+	github.com/gorilla/mux v1.8.0
+	github.com/joho/godotenv v1.3.0 // indirect
+	github.com/lib/pq v1.9.0
 )

@@ -2,11 +2,13 @@ package handler
 
 import (
 	"encoding/json"
+
 	"github.com/lib/pq"
 )
 
 //MyError .
 type MyError struct {
+	Err           error        `json:"err"`
 	Code          pq.ErrorCode `json:"code"`
 	Error         string       `json:"error"`
 	Message       string       `json:"message"`
@@ -23,6 +25,7 @@ func CheckErr(err error) (MyError, bool) {
 	if pgerr, ok := err.(*pq.Error); ok {
 		e := MyError{
 			// InternalQuery: pgerr.InternalQuery,
+			Err:     err,
 			Code:    pgerr.Code,
 			Error:   pgerr.Message,
 			Message: "Algo aconteceu em nossos servidores, tente novamente por favor! Se o problema persistir entre em contato conosco.",
@@ -38,6 +41,7 @@ func CheckErr(err error) (MyError, bool) {
 
 	if err != nil {
 		e := MyError{
+			Err:           err,
 			InternalQuery: err,
 			Code:          "171097",
 			Error:         err.Error(),
