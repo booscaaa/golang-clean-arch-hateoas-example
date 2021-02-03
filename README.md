@@ -78,18 +78,6 @@ $ export GO_ENV=development
 $ go run main.go
 ```
 
-### Running
-
-The docker compose already installed all the dependencies, just run a flutter app into your emulator.
-
-Android and iOS
-
-```
-$ cd packages/mobile/midow
-$ flutter pub get
-$ flutter run
-```
-
 <br>
 
 ### URLs to show the aplications
