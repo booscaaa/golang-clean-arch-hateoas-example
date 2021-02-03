@@ -36,8 +36,6 @@ To run this project in the development mode, you'll need to have a basic environ
 
 - A Golang SDK, that can be found [here](https://golang.org/).
 
-- A Docker App, that con be found [here](https://docs.docker.com/install/)
-
 <br>
 
 ### Installing

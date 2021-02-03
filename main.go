@@ -24,8 +24,9 @@ import (
 // @host todo-list-hateoas.herokuapp.com
 // @BasePath /
 func main() {
-	env := os.Getenv("GO_ENV")
-	err := godotenv.Load(".env." + env)
+	// env := os.Getenv("GO_ENV")
+	// err := godotenv.Load(".env." + env)
+	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Configure as variáveis de ambiente no arquivo .env")
 	}
