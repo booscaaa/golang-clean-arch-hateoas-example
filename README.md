@@ -63,7 +63,7 @@ SSL_MODE=
 BASE_URL=http://localhost:3333
 ```
 
-# Runing !!!!!!!
+# Running !!!!!!!
 
 ```bash
 $ GO_ENV=development go run main.go
@@ -105,7 +105,7 @@ $ go run main.go
 
 ## Contributing
 
-You can send how many PR's do you want, I'll be glad to analyse and accept them! And if you have any question about the project...
+You can send how many PR's do you want, I'll be glad to analyze and accept them! And if you have any question about the project...
 
 Email-me: boscardinvinicius@gmail.com
 
