@@ -51,7 +51,7 @@ func NewItem(id int64, nome string, descricao string, data string, sigla string)
 		Data:      data,
 		Sigla:     sigla,
 	}
-	item = item.GetHateoas()
+	item = item.Hateoas()
 
 	err := item.isValid()
 	if err != nil {
@@ -75,7 +75,7 @@ func NewJSONItem(body io.ReadCloser) (*Item, error) {
 	return &item, nil
 }
 
-func (item *Item) GetHateoas() Item {
+func (item *Item) Hateoas() Item {
 	baseUrl := os.Getenv("BASE_URL")
 	item.Links = []Link{
 		{

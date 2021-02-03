@@ -1,6 +1,6 @@
 package usecase
 
-import "golang-restfull-hateoas-example/domain"
+import "golang-clean-arch-hateoas-example/domain"
 
 type itemUseCase struct {
 	repository domain.ItemRepository

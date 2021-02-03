@@ -10,12 +10,22 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/joho/godotenv"
 
-	"golang-restfull-hateoas-example/provider"
+	"golang-clean-arch-hateoas-example/provider"
 )
 
+// @title Clean archtecture and Level 3 of REST
+// @version 2021.2.1.0
+// @description An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations
+// @termsOfService todo-list-hateoas.herokuapp.com
+// @contact.name Vinícius Boscardin
+// @contact.email boscardinvinicius@gmail.com
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host todo-list-hateoas.herokuapp.com
+// @BasePath /
 func main() {
-	// env := os.Getenv("GO_ENV")
-	err := godotenv.Load()
+	env := os.Getenv("GO_ENV")
+	err := godotenv.Load(".env." + env)
 	if err != nil {
 		log.Fatal("Configure as variáveis de ambiente no arquivo .env")
 	}

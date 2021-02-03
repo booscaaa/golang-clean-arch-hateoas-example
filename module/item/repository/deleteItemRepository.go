@@ -1,12 +1,22 @@
 package repository
 
 import (
-	"golang-restfull-hateoas-example/domain"
+	"golang-clean-arch-hateoas-example/domain"
 )
 
-func (repository *itemRepository) GetByID(id int64) (*domain.Item, error) {
+func (repository *itemRepository) Delete(id int64) (*domain.Item, error) {
 	database := repository.database.Open()
+	tx, err := database.Begin()
 	defer database.Close()
+
+	if err != nil {
+		return nil, err
+	}
+	stmt, err := tx.Prepare(`DELETE FROM item where id = $1 returning *;`)
+
+	if err != nil {
+		return nil, err
+	}
 
 	var idItem int64
 	var nome string
@@ -14,10 +24,7 @@ func (repository *itemRepository) GetByID(id int64) (*domain.Item, error) {
 	var data string
 	var sigla string
 
-	err := database.QueryRow(
-		`SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY HH24:MI:SS'), sigla FROM item where id = $1 ORDER BY data asc;`,
-		id,
-	).Scan(
+	err = stmt.QueryRow(id).Scan(
 		&idItem,
 		&nome,
 		&descricao,
@@ -26,8 +33,11 @@ func (repository *itemRepository) GetByID(id int64) (*domain.Item, error) {
 	)
 
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
+
+	tx.Commit()
 
 	novoItem, err := domain.NewItem(idItem, nome, descricao, data, sigla)
 

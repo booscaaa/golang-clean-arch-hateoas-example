@@ -1,0 +1,152 @@
+basePath: /
+definitions:
+  domain.Item:
+    properties:
+      data:
+        type: string
+      descricao:
+        type: string
+      id:
+        type: integer
+      links:
+        items:
+          $ref: '#/definitions/domain.Link'
+        type: array
+      nome:
+        type: string
+      sigla:
+        type: string
+    type: object
+  domain.Link:
+    properties:
+      href:
+        type: string
+      method:
+        type: string
+    type: object
+host: todo-list-hateoas.herokuapp.com
+info:
+  contact:
+    email: boscardinvinicius@gmail.com
+    name: Vinícius Boscardin
+  description: An application of studies on the implementation of clean architecture
+    with golang with a plus of REST level 3 implementations
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: todo-list-hateoas.herokuapp.com
+  title: Clean archtecture and Level 3 of REST
+  version: 2021.2.1.0
+paths:
+  /item:
+    get:
+      consumes:
+      - application/json
+      description: Search tasks by acronym
+      parameters:
+      - description: vinicius
+        in: query
+        name: sigla
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Item'
+            type: array
+      summary: Search tasks by acronym
+      tags:
+      - item
+    post:
+      consumes:
+      - application/json
+      description: Include tasks into database
+      parameters:
+      - description: item
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Item'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Item'
+      summary: Include tasks into database
+      tags:
+      - item
+  /item/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete tasks
+      parameters:
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Item'
+      summary: Delete tasks
+      tags:
+      - item
+    get:
+      consumes:
+      - application/json
+      description: Search tasks by ID
+      parameters:
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Item'
+      summary: Search tasks by ID
+      tags:
+      - item
+    put:
+      consumes:
+      - application/json
+      description: Change tasks into database
+      parameters:
+      - description: item
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Item'
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Item'
+      summary: Change tasks into database
+      tags:
+      - item
+swagger: "2.0"

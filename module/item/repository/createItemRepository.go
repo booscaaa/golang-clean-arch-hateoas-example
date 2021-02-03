@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"golang-restfull-hateoas-example/domain"
+	"golang-clean-arch-hateoas-example/domain"
 )
 
 func (repository *itemRepository) Create(item domain.Item) (*domain.Item, error) {

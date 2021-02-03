@@ -2,13 +2,22 @@ package usecase
 
 import (
 	"encoding/json"
-	"golang-restfull-hateoas-example/handler"
+	"golang-clean-arch-hateoas-example/core/handler"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
+// GetByID godoc
+// @Summary Search tasks by ID
+// @Description Search tasks by ID
+// @Tags item
+// @Accept  json
+// @Produce  json
+// @Param id path integer true "1"
+// @Success 200 {object} domain.Item
+// @Router /item/{id} [get]
 func (usecase *itemUseCase) GetByID(response http.ResponseWriter, request *http.Request) {
 	id, err := strconv.ParseInt(mux.Vars(request)["id"], 10, 64)
 

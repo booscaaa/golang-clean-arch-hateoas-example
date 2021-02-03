@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"golang-restfull-hateoas-example/domain"
-	"golang-restfull-hateoas-example/factory"
+	"golang-clean-arch-hateoas-example/core/factory"
+	"golang-clean-arch-hateoas-example/domain"
 )
 
 type itemRepository struct {
