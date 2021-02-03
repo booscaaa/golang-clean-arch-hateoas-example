@@ -16,7 +16,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param id path integer true "1"
-// @Success 200 {object} domain.Item
+// @Success 200 {object} domain.Item{links=[]domain.Link}
 // @Router /item/{id} [get]
 func (usecase *itemUseCase) GetByID(response http.ResponseWriter, request *http.Request) {
 	id, err := strconv.ParseInt(mux.Vars(request)["id"], 10, 64)

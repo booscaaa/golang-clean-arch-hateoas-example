@@ -13,7 +13,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param sigla query string true "vinicius"
-// @Success 200 {array} domain.Item
+// @Success 200 {array} domain.Item{links=[]domain.Link}
 // @Router /item [get]
 func (usecase *itemUseCase) Fetch(response http.ResponseWriter, request *http.Request) {
 	sigla := request.FormValue("sigla")

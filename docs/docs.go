@@ -60,7 +60,22 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/domain.Item"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/domain.Item"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "links": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/domain.Link"
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -93,7 +108,22 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.Item"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/domain.Item"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/domain.Link"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -125,7 +155,22 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.Item"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/domain.Item"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/domain.Link"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -164,7 +209,22 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.Item"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/domain.Item"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/domain.Link"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -194,7 +254,22 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.Item"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/domain.Item"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/domain.Link"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -206,25 +281,20 @@ var doc = `{
             "type": "object",
             "properties": {
                 "data": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "2021-02-02"
                 },
                 "descricao": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "links": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/domain.Link"
-                    }
+                    "type": "string",
+                    "example": "Descrição da tarefa 1"
                 },
                 "nome": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Tarefa 1"
                 },
                 "sigla": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "vinicius"
                 }
             }
         },
@@ -232,10 +302,12 @@ var doc = `{
             "type": "object",
             "properties": {
                 "href": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "http(s)://\u003cDOMAIN_OR_IP\u003e/item/{id}"
                 },
                 "method": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "GET"
                 }
             }
         }

@@ -11,12 +11,12 @@ import (
 )
 
 type Item struct {
-	ID        int64  `json:"id"`
-	Nome      string `json:"nome"`
-	Descricao string `json:"descricao"`
-	Data      string `json:"data"`
-	Sigla     string `json:"sigla"`
-	Links     []Link `json:"links"`
+	ID        int64  `json:"id" swaggerignore:"true"`
+	Nome      string `json:"nome" example:"Tarefa 1"`
+	Descricao string `json:"descricao" example:"Descrição da tarefa 1"`
+	Data      string `json:"data" example:"2021-02-02"`
+	Sigla     string `json:"sigla" example:"vinicius"`
+	Links     []Link `json:"links" swaggerignore:"true"`
 }
 
 type ItemUsecase interface {

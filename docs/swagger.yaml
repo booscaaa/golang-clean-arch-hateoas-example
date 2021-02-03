@@ -3,25 +3,25 @@ definitions:
   domain.Item:
     properties:
       data:
+        example: "2021-02-02"
         type: string
       descricao:
+        example: Descrição da tarefa 1
         type: string
-      id:
-        type: integer
-      links:
-        items:
-          $ref: '#/definitions/domain.Link'
-        type: array
       nome:
+        example: Tarefa 1
         type: string
       sigla:
+        example: vinicius
         type: string
     type: object
   domain.Link:
     properties:
       href:
+        example: http(s)://<DOMAIN_OR_IP>/item/{id}
         type: string
       method:
+        example: GET
         type: string
     type: object
 host: todo-list-hateoas.herokuapp.com
@@ -29,8 +29,7 @@ info:
   contact:
     email: boscardinvinicius@gmail.com
     name: Vinícius Boscardin
-  description: An application of studies on the implementation of clean architecture
-    with golang with a plus of REST level 3 implementations
+  description: An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -56,7 +55,14 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/domain.Item'
+              allOf:
+              - $ref: '#/definitions/domain.Item'
+              - properties:
+                  links:
+                    items:
+                      $ref: '#/definitions/domain.Link'
+                    type: array
+                type: object
             type: array
       summary: Search tasks by acronym
       tags:
@@ -78,7 +84,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/domain.Item'
+            allOf:
+            - $ref: '#/definitions/domain.Item'
+            - properties:
+                links:
+                  items:
+                    $ref: '#/definitions/domain.Link'
+                  type: array
+              type: object
       summary: Include tasks into database
       tags:
       - item
@@ -99,7 +112,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/domain.Item'
+            allOf:
+            - $ref: '#/definitions/domain.Item'
+            - properties:
+                links:
+                  items:
+                    $ref: '#/definitions/domain.Link'
+                  type: array
+              type: object
       summary: Delete tasks
       tags:
       - item
@@ -119,7 +139,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/domain.Item'
+            allOf:
+            - $ref: '#/definitions/domain.Item'
+            - properties:
+                links:
+                  items:
+                    $ref: '#/definitions/domain.Link'
+                  type: array
+              type: object
       summary: Search tasks by ID
       tags:
       - item
@@ -145,7 +172,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/domain.Item'
+            allOf:
+            - $ref: '#/definitions/domain.Item'
+            - properties:
+                links:
+                  items:
+                    $ref: '#/definitions/domain.Link'
+                  type: array
+              type: object
       summary: Change tasks into database
       tags:
       - item

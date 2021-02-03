@@ -18,7 +18,7 @@ import (
 // @Produce  json
 // @Param item body domain.Item true "item"
 // @Param id path integer true "1"
-// @Success 200 {object} domain.Item
+// @Success 200 {object} domain.Item{links=[]domain.Link}
 // @Router /item/{id} [put]
 func (usecase *itemUseCase) Update(response http.ResponseWriter, request *http.Request) {
 	itemRequest, err := domain.NewJSONItem(request.Body)
