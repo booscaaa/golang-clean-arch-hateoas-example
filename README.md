@@ -82,9 +82,15 @@ $ go run main.go
 # Testing !!!!!!!
 
 ```bash
-go test ./...
+go test ./... -v
 ```
 
+## To get test coverage
+```bash
+go test -v -coverprofile cover.out ./...
+```
+
+<br>
 <br>
 
 ### URLs to show the aplications
@@ -97,7 +103,7 @@ go test ./...
 
 <br>
 <br>
-<br>
+
 
 ## Api application built With
 
@@ -107,6 +113,10 @@ go test ./...
 - [Gorilla Mux](https://github.com/gorilla/mux)
 - [Go dotenv](https://github.com/joho/godotenv)
 - [Lib PQ](https://github.com/lib/pq)
+- [GO sqlmock](https://github.com/DATA-DOG/go-sqlmock)
+- [Mockery](https://github.com/vektra/mockery/v2)
+- [Swaggo](https://github.com/swaggo/http-swagger)
+- [Testfy](https://github.com/stretchr/testify)
 
 <br>
 <br>
