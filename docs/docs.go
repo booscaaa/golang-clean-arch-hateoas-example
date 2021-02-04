@@ -330,7 +330,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "todo-list-hateoas.herokuapp.com",
 	BasePath:    "/",
 	Schemes:     []string{},
-	Title:       "Clean archtecture and Level 3 of REST",
+	Title:       "Clean architecture and Level 3 of REST",
 	Description: "An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations",
 }
 

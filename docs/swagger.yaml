@@ -36,7 +36,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: todo-list-hateoas.herokuapp.com
-  title: Clean archtecture and Level 3 of REST
+  title: Clean architecture and Level 3 of REST
   version: 2021.2.1.0
 paths:
   /item:

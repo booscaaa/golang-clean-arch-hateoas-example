@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations",
-        "title": "Clean archtecture and Level 3 of REST",
+        "title": "Clean architecture and Level 3 of REST",
         "termsOfService": "todo-list-hateoas.herokuapp.com",
         "contact": {
             "name": "Vinícius Boscardin",
