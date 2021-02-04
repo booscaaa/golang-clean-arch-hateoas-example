@@ -13,7 +13,7 @@ func TestShouldFetchItensRepository(t *testing.T) {
 	tarefa := "Tarefa n"
 	descricao := "Descrição tarefa n"
 	data := "01/01/2021"
-	sigla := "vinicius"
+	sigla := "vin"
 	query := "SELECT (.+) FROM item"
 	columns := []string{"id", "nome", "descricao", "data", "sigla"}
 

@@ -12,7 +12,8 @@ definitions:
         example: Tarefa 1
         type: string
       sigla:
-        example: vinicius
+        example: vin
+        maxLength: 3
         type: string
     type: object
   domain.Link:
@@ -43,7 +44,7 @@ paths:
       - application/json
       description: Search tasks by acronym
       parameters:
-      - description: vinicius
+      - description: vin
         in: query
         name: sigla
         required: true

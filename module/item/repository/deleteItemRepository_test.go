@@ -14,7 +14,7 @@ func TestShouldDeleteItemRepository(t *testing.T) {
 	tarefa := "Tarefa 1"
 	descricao := "Descrição tarefa 1"
 	data := "2021-01-01 12:00:00"
-	sigla := "vinicius"
+	sigla := "vin"
 	query := "DELETE FROM item"
 	columns := []string{"id", "nome", "descricao", "data", "sigla"}
 

@@ -48,7 +48,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "vinicius",
+                        "description": "vin",
                         "name": "sigla",
                         "in": "query",
                         "required": true
@@ -294,7 +294,8 @@ var doc = `{
                 },
                 "sigla": {
                     "type": "string",
-                    "example": "vinicius"
+                    "maxLength": 3,
+                    "example": "vin"
                 }
             }
         },

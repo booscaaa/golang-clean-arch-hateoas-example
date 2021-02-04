@@ -12,7 +12,7 @@ import (
 // @Tags item
 // @Accept  json
 // @Produce  json
-// @Param sigla query string true "vinicius"
+// @Param sigla query string true "vin"
 // @Success 200 {array} domain.Item{links=[]domain.Link}
 // @Router /item [get]
 func (usecase *itemUseCase) Fetch(response http.ResponseWriter, request *http.Request) {

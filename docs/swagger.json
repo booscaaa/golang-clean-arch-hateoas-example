@@ -33,7 +33,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "vinicius",
+                        "description": "vin",
                         "name": "sigla",
                         "in": "query",
                         "required": true
@@ -279,7 +279,8 @@
                 },
                 "sigla": {
                     "type": "string",
-                    "example": "vinicius"
+                    "maxLength": 3,
+                    "example": "vin"
                 }
             }
         },

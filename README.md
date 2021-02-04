@@ -76,6 +76,11 @@ $ export GO_ENV=development
 $ go run main.go
 ```
 
+# Testing !!!!!!!
+```bash
+go test ./...
+```
+
 <br>
 
 ### URLs to show the aplications

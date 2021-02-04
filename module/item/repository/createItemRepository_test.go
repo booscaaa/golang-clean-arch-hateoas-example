@@ -14,7 +14,7 @@ func TestShouldCreateItemRepository(t *testing.T) {
 	tarefa := "Tarefa 1"
 	descricao := "Descrição tarefa 1"
 	data := "2021-01-01 12:00:00"
-	sigla := "vinicius"
+	sigla := "vin"
 	query := "INSERT INTO item"
 	columns := []string{"id", "nome", "descricao", "data", "sigla"}
 	itemToCreate, err := domain.NewItem(0, tarefa, descricao, data, sigla)
@@ -77,7 +77,7 @@ func TestShouldRollbackCreateItemRepository(t *testing.T) {
 	tarefa := "Tarefa 1"
 	descricao := "Descrição tarefa 1"
 	data := "2021-01-01 12:00:00"
-	sigla := "vinicius"
+	sigla := "vin"
 	query := "INSERT INTO item"
 	itemToCreate, err := domain.NewItem(0, tarefa, descricao, data, sigla)
 

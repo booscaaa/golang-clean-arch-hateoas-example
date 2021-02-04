@@ -15,7 +15,7 @@ func TestShouldUpdateItemRepository(t *testing.T) {
 	tarefa := "Tarefa 1"
 	descricao := "Descrição tarefa 1"
 	data := "2021-01-01 12:00:00"
-	sigla := "vinicius"
+	sigla := "vin"
 	query := "UPDATE item"
 	columns := []string{"id", "nome", "descricao", "data", "sigla"}
 	itemToUpdate, err := domain.NewItem(id, tarefa, descricao, data, sigla)
@@ -78,7 +78,7 @@ func TestShouldRollbackUpdateItemRepository(t *testing.T) {
 	tarefa := "Tarefa 1"
 	descricao := "Descrição tarefa 1"
 	data := "2021-01-01 12:00:00"
-	sigla := "vinicius"
+	sigla := "vin"
 	query := "UPDATE item"
 	itemToUpdate, err := domain.NewItem(id, tarefa, descricao, data, sigla)
 
