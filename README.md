@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Clean archtecture and Level 3 of REST</h1>
+  <h1 align="center">Clean architecture and Level 3 of REST</h1>
   <p align="center">An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations.</p>
   <p align="center">
     <a href="https://github.com/booscaaa/golang-clean-arch-hateoas-example/releases/latest"><img alt="Release" src="https://img.shields.io/badge/release-0.0.1-blue?style=for-the-badge"></a>

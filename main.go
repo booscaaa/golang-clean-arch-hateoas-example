@@ -14,7 +14,7 @@ import (
 	"golang-clean-arch-hateoas-example/provider"
 )
 
-// @title Clean archtecture and Level 3 of REST
+// @title Clean architecture and Level 3 of REST
 // @version 2021.2.1.0
 // @description An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations
 // @termsOfService todo-list-hateoas.herokuapp.com
