@@ -18,9 +18,11 @@ import (
 // @Router /item [post]
 func (usecase *itemUseCase) Create(response http.ResponseWriter, request *http.Request) {
 	itemRequest, err := domain.NewJSONItem(request.Body)
+
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	insertedItem, err := usecase.repository.Create(*itemRequest)
@@ -28,6 +30,7 @@ func (usecase *itemUseCase) Create(response http.ResponseWriter, request *http.R
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	payload, err := json.Marshal(insertedItem)
@@ -35,6 +38,7 @@ func (usecase *itemUseCase) Create(response http.ResponseWriter, request *http.R
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	response.WriteHeader(200)

@@ -40,6 +40,10 @@ func (item *Item) isValid() error {
 	if err != nil {
 		return err
 	}
+
+	if item.Descricao == "" {
+		return fmt.Errorf("No description")
+	}
 	return nil
 }
 

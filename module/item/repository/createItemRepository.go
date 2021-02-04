@@ -6,6 +6,7 @@ import (
 
 func (repository *itemRepository) Create(item domain.Item) (*domain.Item, error) {
 	database := repository.database
+
 	tx, err := database.Begin()
 	// defer database.Close()
 

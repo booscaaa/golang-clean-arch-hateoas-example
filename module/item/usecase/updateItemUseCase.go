@@ -22,10 +22,17 @@ import (
 // @Router /item/{id} [put]
 func (usecase *itemUseCase) Update(response http.ResponseWriter, request *http.Request) {
 	itemRequest, err := domain.NewJSONItem(request.Body)
+	if err, isErr := handler.CheckErr(err); isErr {
+		response.WriteHeader(500)
+		response.Write(err.ReturnError())
+		return
+	}
+
 	id, err := strconv.ParseInt(mux.Vars(request)["id"], 10, 64)
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	updatedItem, err := usecase.repository.Update(*itemRequest, id)
@@ -33,6 +40,7 @@ func (usecase *itemUseCase) Update(response http.ResponseWriter, request *http.R
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	payload, err := json.Marshal(updatedItem)
@@ -40,6 +48,7 @@ func (usecase *itemUseCase) Update(response http.ResponseWriter, request *http.R
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	response.WriteHeader(200)
