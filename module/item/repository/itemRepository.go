@@ -1,15 +1,15 @@
 package repository
 
 import (
-	"golang-clean-arch-hateoas-example/core/factory"
+	"database/sql"
 	"golang-clean-arch-hateoas-example/domain"
 )
 
 type itemRepository struct {
-	database factory.Connection
+	database *sql.DB
 }
 
-func ItemRepositoryImpl(connection factory.Connection) domain.ItemRepository {
+func ItemRepositoryImpl(connection *sql.DB) domain.ItemRepository {
 	return &itemRepository{
 		database: connection,
 	}

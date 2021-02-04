@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/joho/godotenv"
 
+	"golang-clean-arch-hateoas-example/core/factory"
 	"golang-clean-arch-hateoas-example/provider"
 )
 
@@ -24,9 +25,9 @@ import (
 // @host todo-list-hateoas.herokuapp.com
 // @BasePath /
 func main() {
-	env := os.Getenv("GO_ENV")
-	err := godotenv.Load(".env." + env)
-	// err := godotenv.Load()
+	// env := os.Getenv("GO_ENV")
+	// err := godotenv.Load(".env." + env)
+	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Configure as variáveis de ambiente no arquivo .env")
 	}
@@ -37,7 +38,15 @@ func main() {
 		log.Printf("Porta de acesso: "+GetLocalIP()+":%s", port)
 	}
 
-	r := provider.Routes()
+	db := factory.GetConnection()
+	defer func() {
+		err := db.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	r := provider.Routes(db)
 	fmt.Println(http.ListenAndServe(fmt.Sprintf(":%s", port), handlers.CompressHandler(r)))
 }
 

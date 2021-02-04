@@ -5,11 +5,12 @@ import (
 )
 
 func (repository *itemRepository) Create(item domain.Item) (*domain.Item, error) {
-	database := repository.database.Open()
+	database := repository.database
 	tx, err := database.Begin()
-	defer database.Close()
+	// defer database.Close()
 
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 	stmt, err := tx.Prepare(
@@ -17,6 +18,7 @@ func (repository *itemRepository) Create(item domain.Item) (*domain.Item, error)
 	)
 
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 
@@ -35,6 +37,7 @@ func (repository *itemRepository) Create(item domain.Item) (*domain.Item, error)
 	)
 
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 

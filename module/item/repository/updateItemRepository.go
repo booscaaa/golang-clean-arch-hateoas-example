@@ -5,11 +5,11 @@ import (
 )
 
 func (repository *itemRepository) Update(item domain.Item, id int64) (*domain.Item, error) {
-	database := repository.database.Open()
-	tx, err := database.Begin()
-	defer database.Close()
+	tx, err := repository.database.Begin()
+	// defer repository.database.Close()
 
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 	stmt, err := tx.Prepare(
@@ -17,6 +17,7 @@ func (repository *itemRepository) Update(item domain.Item, id int64) (*domain.It
 	)
 
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 

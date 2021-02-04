@@ -5,11 +5,10 @@ import (
 )
 
 func (repository *itemRepository) Fetch(sigla string) (*[]domain.Item, error) {
-	database := repository.database.Open()
-	defer database.Close()
+	// defer repository.database.Close()
 	var itens []domain.Item
 
-	rows, err := database.Query(
+	rows, err := repository.database.Query(
 		`SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY'), sigla FROM item where sigla = $1 ORDER BY data asc;`,
 		sigla,
 	)

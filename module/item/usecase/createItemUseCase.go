@@ -17,7 +17,6 @@ import (
 // @Success 200 {object} domain.Item{links=[]domain.Link}
 // @Router /item [post]
 func (usecase *itemUseCase) Create(response http.ResponseWriter, request *http.Request) {
-
 	itemRequest, err := domain.NewJSONItem(request.Body)
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
