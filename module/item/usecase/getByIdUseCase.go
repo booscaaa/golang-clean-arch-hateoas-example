@@ -24,6 +24,7 @@ func (usecase *itemUseCase) GetByID(response http.ResponseWriter, request *http.
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	item, err := usecase.repository.GetByID(id)
@@ -31,6 +32,7 @@ func (usecase *itemUseCase) GetByID(response http.ResponseWriter, request *http.
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	payload, err := json.Marshal(item)
@@ -38,6 +40,7 @@ func (usecase *itemUseCase) GetByID(response http.ResponseWriter, request *http.
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	response.WriteHeader(200)

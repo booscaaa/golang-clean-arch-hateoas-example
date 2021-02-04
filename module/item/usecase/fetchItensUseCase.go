@@ -17,11 +17,19 @@ import (
 // @Router /item [get]
 func (usecase *itemUseCase) Fetch(response http.ResponseWriter, request *http.Request) {
 	sigla := request.FormValue("sigla")
+
+	if sigla == "" {
+		response.WriteHeader(500)
+		response.Write([]byte("Sigla query string is required"))
+		return
+	}
+
 	itens, err := usecase.repository.Fetch(sigla)
 
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	payload, err := json.Marshal(itens)
@@ -29,6 +37,7 @@ func (usecase *itemUseCase) Fetch(response http.ResponseWriter, request *http.Re
 	if err, isErr := handler.CheckErr(err); isErr {
 		response.WriteHeader(500)
 		response.Write(err.ReturnError())
+		return
 	}
 
 	response.WriteHeader(200)
