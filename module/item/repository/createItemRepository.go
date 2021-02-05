@@ -11,7 +11,6 @@ func (repository *itemRepository) Create(item domain.Item) (*domain.Item, error)
 	// defer database.Close()
 
 	if err != nil {
-		tx.Rollback()
 		return nil, err
 	}
 	stmt, err := tx.Prepare(

@@ -9,7 +9,6 @@ func (repository *itemRepository) Delete(id int64) (*domain.Item, error) {
 	// defer repository.database.Close()
 
 	if err != nil {
-		tx.Rollback()
 		return nil, err
 	}
 	stmt, err := tx.Prepare(`DELETE FROM item where id = $1 returning *;`)

@@ -101,3 +101,19 @@ func TestShouldRollbackDeleteItemRepository(t *testing.T) {
 		t.Errorf("there were unfulfilled expectations: %s", err)
 	}
 }
+
+func TestShouldErrorDeleteItemRepositoryEmpty(t *testing.T) {
+	db, _, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	defer db.Close()
+
+	itemRepository := repository.ItemRepositoryImpl(db)
+
+	_, err = itemRepository.Delete(0)
+
+	if err == nil {
+		t.Error("Expected error, but got none")
+	}
+}

@@ -67,3 +67,19 @@ func TestShouldFetchItensRepository(t *testing.T) {
 	require.NotEmpty(t, itens)
 	require.Equal(t, len(*itens), 3)
 }
+
+func TestShouldErrorFetchItensRepositoryEmpty(t *testing.T) {
+	db, _, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	defer db.Close()
+
+	itemRepository := repository.ItemRepositoryImpl(db)
+
+	_, err = itemRepository.Fetch("")
+
+	if err == nil {
+		t.Error("Expected error, but got none")
+	}
+}

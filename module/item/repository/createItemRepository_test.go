@@ -17,7 +17,7 @@ func TestShouldCreateItemRepository(t *testing.T) {
 	sigla := "vin"
 	query := "INSERT INTO item"
 	columns := []string{"id", "nome", "descricao", "data", "sigla"}
-	itemToCreate, err := domain.NewItem(0, tarefa, descricao, data, sigla)
+	itemToCreate, err := domain.NewItem(1, tarefa, descricao, data, sigla)
 
 	db, mock, err := sqlmock.New()
 	if err != nil {
@@ -36,7 +36,7 @@ func TestShouldCreateItemRepository(t *testing.T) {
 		itemToCreate.Sigla,
 	).WillReturnRows(
 		sqlmock.NewRows(columns).AddRow(
-			3,
+			1,
 			tarefa,
 			descricao,
 			data,
@@ -67,7 +67,7 @@ func TestShouldCreateItemRepository(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, itemCreated.ID)
-	require.Equal(t, itemCreated.ID, int64(3))
+	require.Equal(t, itemCreated.ID, int64(1))
 	require.Equal(t, itemCreated.Nome, tarefa)
 	require.Equal(t, itemCreated.Data, data)
 	require.Equal(t, itemCreated.Sigla, sigla)
@@ -79,7 +79,7 @@ func TestShouldRollbackCreateItemRepository(t *testing.T) {
 	data := "2021-01-01 12:00:00"
 	sigla := "vin"
 	query := "INSERT INTO item"
-	itemToCreate, err := domain.NewItem(0, tarefa, descricao, data, sigla)
+	itemToCreate, err := domain.NewItem(1, tarefa, descricao, data, sigla)
 
 	db, mock, err := sqlmock.New()
 	if err != nil {
@@ -112,5 +112,22 @@ func TestShouldRollbackCreateItemRepository(t *testing.T) {
 	// we make sure that all expectations were met
 	if err := mock.ExpectationsWereMet(); err != nil {
 		t.Errorf("there were unfulfilled expectations: %s", err)
+	}
+}
+
+func TestShouldErrorCreateItemRepositoryEmpty(t *testing.T) {
+
+	db, _, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	defer db.Close()
+
+	itemRepository := repository.ItemRepositoryImpl(db)
+
+	_, err = itemRepository.Create(*&domain.Item{})
+
+	if err == nil {
+		t.Error("Expected error, but got none")
 	}
 }

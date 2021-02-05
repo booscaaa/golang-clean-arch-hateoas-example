@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/asaskevich/govalidator"
 	"github.com/spf13/viper"
 )
 
@@ -36,10 +35,6 @@ type ItemRepository interface {
 }
 
 func (item *Item) isValid() error {
-	_, err := govalidator.ValidateStruct(item)
-	if err != nil {
-		return err
-	}
 
 	if item.Descricao == "" {
 		return fmt.Errorf("No description")
@@ -55,17 +50,20 @@ func NewItem(id int64, nome string, descricao string, data string, sigla string)
 		Data:      data,
 		Sigla:     sigla,
 	}
-	item = item.Hateoas()
-
-	err := item.isValid()
+	hItem, err := item.Hateoas()
 	if err != nil {
 		return nil, err
 	}
 
-	return &item, nil
+	err = hItem.isValid()
+	if err != nil {
+		return nil, err
+	}
+
+	return hItem, nil
 }
 
-func NewJSONItem(body io.ReadCloser) (*Item, error) {
+func NewJSONItem(body io.Reader) (*Item, error) {
 	item := Item{}
 	if err := json.NewDecoder(body).Decode(&item); err != nil {
 		return nil, err
@@ -79,7 +77,10 @@ func NewJSONItem(body io.ReadCloser) (*Item, error) {
 	return &item, nil
 }
 
-func (item *Item) Hateoas() Item {
+func (item *Item) Hateoas() (*Item, error) {
+	if item.ID == 0 {
+		return nil, fmt.Errorf("No item to generate hateoas")
+	}
 	baseUrl := viper.GetString(`hateoas.base`)
 	item.Links = []Link{
 		{
@@ -96,5 +97,5 @@ func (item *Item) Hateoas() Item {
 		},
 	}
 
-	return *item
+	return item, nil
 }

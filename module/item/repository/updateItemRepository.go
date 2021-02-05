@@ -9,7 +9,6 @@ func (repository *itemRepository) Update(item domain.Item, id int64) (*domain.It
 	// defer repository.database.Close()
 
 	if err != nil {
-		tx.Rollback()
 		return nil, err
 	}
 	stmt, err := tx.Prepare(
