@@ -2,9 +2,9 @@
   <h1 align="center">Clean architecture and Level 3 of REST</h1>
   <p align="center">An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations.</p>
   <p align="center">
-    <a href="https://github.com/booscaaa/golang-clean-arch-hateoas-example/releases/latest"><img alt="Release" src="https://img.shields.io/badge/release-0.0.1-blue?style=for-the-badge"></a>
+    <a href="https://github.com/booscaaa/golang-clean-arch-hateoas-example/releases/latest"><img alt="Release" src="https://img.shields.io/badge/release-v0.0.3-blue?style=for-the-badge"></a>
     <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge"></a>
-    <a><img alt="Coverage" src="https://img.shields.io/badge/coverage-67%25-orange?style=for-the-badge"></a>
+    <a><img alt="Coverage" src="https://img.shields.io/badge/coverage-69%25-orange?style=for-the-badge"></a>
     <a href="https://todo-list-hateoas.herokuapp.com/doc/index.html"><img alt="Swagger docs" src="https://img.shields.io/badge/api docs-swagger-red?style=for-the-badge"></a>
   </p>
 </p>
