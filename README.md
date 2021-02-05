@@ -53,49 +53,61 @@ $ cd golang-clean-arch-hateoas-example
 
 <br>
 
-### Config our environment variables like this (this config set to my heroku application database)
+### Rename config.example.json to config.json
 
-.env.production and .env.development
+config.json - this is my heroku app
 
-```bash
-DB_HOST=ec2-50-16-198-4.compute-1.amazonaws.com
-DB_USER=izrykubjdwzynh
-DB_PASSWORD=d6d5c87ab5b0d734323acc8dc729c3f389f4368c8dc73cbd9be844bce3173fb2
-DB_NAME=d6r28h5h9fqrn3
-SSL_MODE=
-BASE_URL=http://localhost:3333
+```json
+{
+  "database": {
+    "host": "ec2-50-16-198-4.compute-1.amazonaws.com",
+    "port": "5432",
+    "user": "izrykubjdwzynh",
+    "pass": "d6d5c87ab5b0d734323acc8dc729c3f389f4368c8dc73cbd9be844bce3173fb2",
+    "name": "d6r28h5h9fqrn3"
+  },
+  "hateoas": {
+    "base": "https://todo-list-hateoas.herokuapp.com"
+  }
+}
+
 ```
 
-# Running !!!!!!!
+<br>
+
+# Running with docker-compose !!!!!!!
+```bash
+$ docker-compose up --build -d
+```
+<br>
+<br>
+
+# Running local
 
 ```bash
-$ GO_ENV=development go run main.go
+go run main.go
 ```
 
-or
+# Testing
 
 ```bash
-$ export GO_ENV=development
-$ go run main.go
-```
-
-# Testing !!!!!!!
-
-```bash
-go test ./... -v
+$ go test -v ./... 
 ```
 
 ## To get test coverage
 ```bash
-go test -v -coverprofile cover.out ./...
+$ go test -v -coverprofile cover.out ./...
 ```
 
 <br>
 <br>
+<br>
+
+
 
 ### URLs to show the aplications
 
-- API = http://YOUR_MACHINE_IP:3333
+- API = http://YOUR_MACHINE_IP:<CONFIG_JSON_PORT>
 
 ### To access the endpoints documentation
 

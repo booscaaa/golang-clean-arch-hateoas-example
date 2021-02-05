@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  builder:
+    build:
+      context: .
+      target: builder
+
+  production:
+    build:
+      context: .
+      target: production
+    depends_on:
+      - 'builder'
+    ports:
+      - '3333:3333'
+    restart: unless-stopped
+    # command: bash -c " ./main"

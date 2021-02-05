@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/spf13/viper"
 )
 
 type Item struct {
@@ -80,7 +80,7 @@ func NewJSONItem(body io.ReadCloser) (*Item, error) {
 }
 
 func (item *Item) Hateoas() Item {
-	baseUrl := os.Getenv("BASE_URL")
+	baseUrl := viper.GetString(`hateoas.base`)
 	item.Links = []Link{
 		{
 			Href:   fmt.Sprintf("%s/item/%d", baseUrl, item.ID),

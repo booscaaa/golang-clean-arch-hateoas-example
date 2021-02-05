@@ -8,11 +8,19 @@ import (
 	"os"
 
 	"github.com/gorilla/handlers"
-	"github.com/joho/godotenv"
+	"github.com/spf13/viper"
 
 	"golang-clean-arch-hateoas-example/core/factory"
 	"golang-clean-arch-hateoas-example/provider"
 )
+
+func init() {
+	viper.SetConfigFile(`config.json`)
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(err)
+	}
+}
 
 // @title Clean architecture and Level 3 of REST
 // @version 2021.2.1.0
@@ -25,13 +33,6 @@ import (
 // @host todo-list-hateoas.herokuapp.com
 // @BasePath /
 func main() {
-	env := os.Getenv("GO_ENV")
-	err := godotenv.Load(".env." + env)
-	// err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Configure as variáveis de ambiente no arquivo .env")
-	}
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3333"

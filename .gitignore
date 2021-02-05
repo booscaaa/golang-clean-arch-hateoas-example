@@ -1,2 +1,2 @@
-.env
-.env.development
+config.json
+go.sum

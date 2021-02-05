@@ -1,0 +1,12 @@
+{
+  "database": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "pass": "",
+    "name": ""
+  },
+  "hateoas": {
+    "base": ""
+  }
+}

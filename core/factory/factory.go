@@ -3,19 +3,19 @@ package factory
 import (
 	"database/sql"
 	"fmt"
-	"os"
 
 	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
 )
 
 func GetConnection() *sql.DB {
-	dbHost := os.Getenv("DB_HOST")
-	dbUser := os.Getenv("DB_USER")
-	bdPassword := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
+	dbHost := viper.GetString(`database.host`)
+	dbUser := viper.GetString(`database.user`)
+	dbPassword := viper.GetString(`database.pass`)
+	dbName := viper.GetString(`database.name`)
 
 	dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s",
-		dbHost, dbUser, bdPassword, dbName)
+		dbHost, dbUser, dbPassword, dbName)
 
 	db, err := sql.Open("postgres", dbinfo)
 	checkErr(err)
