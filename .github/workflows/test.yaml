@@ -15,7 +15,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Test
-      run: go test ./...
+      run: go test ./... -coverprofile=coverage.txt -covermode=atomic
+
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: 49f83277-ece6-46e9-bae5-a1e2ba7530bb
+        file: ./coverage.txt
+        flags: unittests
+        name: codecov-umbrella
 
   test-cache:
     runs-on: ubuntu-latest
@@ -42,4 +50,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-go-
     - name: Test
-      run: go test ./...
+      run: go test ./... -coverprofile=coverage.txt -covermode=atomic
+
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: 49f83277-ece6-46e9-bae5-a1e2ba7530bb
+        file: ./coverage.txt
+        flags: unittests
+        name: codecov-umbrella
