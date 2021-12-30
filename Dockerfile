@@ -18,8 +18,6 @@ RUN mv docs ./deploy/docs
 RUN mv config.json ./deploy/config.json
 
 
-
-
 FROM alpine:3.7 AS production
 
 COPY --from=builder /go/api/deploy /api/

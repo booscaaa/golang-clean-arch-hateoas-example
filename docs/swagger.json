@@ -12,14 +12,19 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "2021.2.1.0"
+        "version": "2021.12.5.0"
     },
     "host": "todo-list-hateoas.herokuapp.com",
     "basePath": "/",
     "paths": {
         "/item": {
             "get": {
-                "description": "Search tasks by acronym",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Fetch items by sigla",
                 "consumes": [
                     "application/json"
                 ],
@@ -29,11 +34,11 @@
                 "tags": [
                     "item"
                 ],
-                "summary": "Search tasks by acronym",
+                "summary": "Fetch items by sigla",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "vin",
+                        "description": "vnb",
                         "name": "sigla",
                         "in": "query",
                         "required": true
@@ -43,31 +48,18 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/definitions/domain.Item"
-                                    },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "links": {
-                                                "type": "array",
-                                                "items": {
-                                                    "$ref": "#/definitions/domain.Link"
-                                                }
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
+                            "$ref": "#/definitions/domain.Item"
                         }
                     }
                 }
             },
             "post": {
-                "description": "Include tasks into database",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create new item",
                 "consumes": [
                     "application/json"
                 ],
@@ -77,11 +69,11 @@
                 "tags": [
                     "item"
                 ],
-                "summary": "Include tasks into database",
+                "summary": "Create new item",
                 "parameters": [
                     {
                         "description": "item",
-                        "name": "item",
+                        "name": "company",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -93,22 +85,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/domain.Item"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "links": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/domain.Link"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/domain.Item"
                         }
                     }
                 }
@@ -116,7 +93,12 @@
         },
         "/item/{id}": {
             "get": {
-                "description": "Search tasks by ID",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get item by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -126,7 +108,7 @@
                 "tags": [
                     "item"
                 ],
-                "summary": "Search tasks by ID",
+                "summary": "Get item by id",
                 "parameters": [
                     {
                         "type": "integer",
@@ -140,28 +122,18 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/domain.Item"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "links": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/domain.Link"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/domain.Item"
                         }
                     }
                 }
             },
             "put": {
-                "description": "Change tasks into database",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update item by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -171,7 +143,7 @@
                 "tags": [
                     "item"
                 ],
-                "summary": "Change tasks into database",
+                "summary": "Update item by id",
                 "parameters": [
                     {
                         "description": "item",
@@ -194,28 +166,18 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/domain.Item"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "links": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/domain.Link"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/domain.Item"
                         }
                     }
                 }
             },
             "delete": {
-                "description": "Delete tasks",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete item by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -225,7 +187,7 @@
                 "tags": [
                     "item"
                 ],
-                "summary": "Delete tasks",
+                "summary": "Delete item by id",
                 "parameters": [
                     {
                         "type": "integer",
@@ -239,22 +201,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/domain.Item"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "links": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/domain.Link"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/domain.Item"
                         }
                     }
                 }
@@ -265,15 +212,21 @@
         "domain.Item": {
             "type": "object",
             "properties": {
-                "data": {
+                "_links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.Link"
+                    }
+                },
+                "date": {
                     "type": "string",
                     "example": "2021-02-02"
                 },
-                "descricao": {
+                "description": {
                     "type": "string",
                     "example": "Descrição da tarefa 1"
                 },
-                "nome": {
+                "name": {
                     "type": "string",
                     "example": "Tarefa 1"
                 },
@@ -287,6 +240,10 @@
         "domain.Link": {
             "type": "object",
             "properties": {
+                "doc": {
+                    "type": "string",
+                    "example": "http(s)://\u003cDOMAIN_OR_IP\u003e/doc/index.html"
+                },
                 "href": {
                     "type": "string",
                     "example": "http(s)://\u003cDOMAIN_OR_IP\u003e/item/{id}"

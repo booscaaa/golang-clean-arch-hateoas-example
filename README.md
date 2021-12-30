@@ -61,11 +61,7 @@ config.json - this is my heroku app
 ```json
 {
   "database": {
-    "host": "ec2-50-16-198-4.compute-1.amazonaws.com",
-    "port": "5432",
-    "user": "izrykubjdwzynh",
-    "pass": "d6d5c87ab5b0d734323acc8dc729c3f389f4368c8dc73cbd9be844bce3173fb2",
-    "name": "d6r28h5h9fqrn3"
+    "url": "postgres://izrykubjdwzynh:d6d5c87ab5b0d734323acc8dc729c3f389f4368c8dc73cbd9be844bce3173fb2@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d6r28h5h9fqrn3"
   },
   "hateoas": {
     "base": "https://todo-list-hateoas.herokuapp.com"

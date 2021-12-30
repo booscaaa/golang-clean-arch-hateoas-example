@@ -1,10 +1,6 @@
 {
   "database": {
-    "host": "",
-    "port": "",
-    "user": "",
-    "pass": "",
-    "name": ""
+    "url": ""
   },
   "hateoas": {
     "base": ""

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -10,8 +11,8 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/spf13/viper"
 
-	"golang-clean-arch-hateoas-example/core/factory"
-	"golang-clean-arch-hateoas-example/provider"
+	http1 "golang-clean-arch-hateoas-example/adapter/http"
+	"golang-clean-arch-hateoas-example/adapter/postgres"
 )
 
 func init() {
@@ -23,7 +24,7 @@ func init() {
 }
 
 // @title Clean architecture and Level 3 of REST
-// @version 2021.2.1.0
+// @version 2021.12.5.0
 // @description An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations
 // @termsOfService todo-list-hateoas.herokuapp.com
 // @contact.name Vinícius Boscardin
@@ -33,21 +34,18 @@ func init() {
 // @host todo-list-hateoas.herokuapp.com
 // @BasePath /
 func main() {
+	ctx := context.Background()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3333"
 		log.Printf("Porta de acesso: "+GetLocalIP()+":%s", port)
 	}
 
-	db := factory.GetConnection()
-	defer func() {
-		err := db.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	conn := postgres.GetConnection(ctx)
+	defer conn.Close()
 
-	r := provider.Routes(db)
+	r := http1.GenerateRoutes(conn)
 	fmt.Println(http.ListenAndServe(fmt.Sprintf(":%s", port), handlers.CompressHandler(r)))
 }
 

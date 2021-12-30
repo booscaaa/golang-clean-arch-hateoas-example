@@ -1,18 +1,12 @@
 version: '3.4'
 
 services:
-  builder:
+  api_hateoas:
+    container_name: api_hateoas
     build:
       context: .
-      target: builder
-
-  production:
-    build:
-      context: .
-      target: production
-    depends_on:
-      - 'builder'
+      dockerfile: Dockerfile.dev
     ports:
-      - '3333:3333'
-    restart: unless-stopped
-    # command: bash -c " ./main"
+      - 3333:3333
+    volumes:
+      - ./:/api
