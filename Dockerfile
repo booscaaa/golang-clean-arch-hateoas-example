@@ -8,7 +8,7 @@ RUN go get -u github.com/swaggo/swag/cmd/swag
 
 RUN rm -rf deploy
 RUN mkdir deploy
-RUN go mod download
+RUN go mod tidy
 RUN /go/bin/swag init
 
 RUN CGO_ENABLED=0 go build -o goapp
