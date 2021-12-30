@@ -10,7 +10,6 @@ RUN rm -rf deploy
 RUN mkdir deploy
 RUN go mod download
 RUN /go/bin/swag init
-RUN go test ./...
 
 RUN CGO_ENABLED=0 go build -o goapp
 RUN mv goapp ./deploy/goapp
