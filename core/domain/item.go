@@ -11,7 +11,7 @@ type Item struct {
 	Name        string `json:"name" example:"Tarefa 1"`
 	Description string `json:"description" example:"Descrição da tarefa 1"`
 	Date        string `json:"date" example:"2021-02-02"`
-	Sigla       string `json:"sigla" example:"vin" maxLength:"3"`
+	Initials    string `json:"initials" example:"vin" maxLength:"3"`
 	Links       []Link `json:"_links"`
 }
 
@@ -19,15 +19,15 @@ type ItemUsecase interface {
 	Create(item Item) (*Item, error)
 	Update(item Item) (*Item, error)
 	Delete(id int) (*Item, error)
-	Fetch(sigla string) (*[]Item, error)
+	Fetch(initials string) (*[]Item, error)
 	GetByID(id int) (*Item, error)
 }
 
 type ItemRepository interface {
-	Create(date, description, name, sigla string) (*Item, error)
-	Update(id int, date, description, name, sigla string) (*Item, error)
+	Create(date, description, name, initials string) (*Item, error)
+	Update(id int, date, description, name, initials string) (*Item, error)
 	Delete(id int) (*Item, error)
-	Fetch(sigla string) (*[]Item, error)
+	Fetch(initials string) (*[]Item, error)
 	GetByID(id int) (*Item, error)
 }
 
@@ -38,13 +38,13 @@ func (item *Item) isValid() error {
 	return nil
 }
 
-func NewItem(id int, name string, description string, date string, sigla string) (*Item, error) {
+func NewItem(id int, name string, description string, date string, initials string) (*Item, error) {
 	item := Item{
 		ID:          id,
 		Name:        name,
 		Description: description,
 		Date:        date,
-		Sigla:       sigla,
+		Initials:    initials,
 	}
 
 	err := item.isValid()

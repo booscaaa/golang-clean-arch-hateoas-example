@@ -11,8 +11,8 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/spf13/viper"
 
-	http1 "golang-clean-arch-hateoas-example/adapter/http"
-	"golang-clean-arch-hateoas-example/adapter/postgres"
+	http1 "github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/postgres"
 )
 
 func init() {

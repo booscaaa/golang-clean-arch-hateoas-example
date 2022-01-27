@@ -2,10 +2,10 @@
   <h1 align="center">Clean architecture and Level 3 of REST</h1>
   <p align="center">An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations.</p>
   <p align="center">
-    <a href="https://github.com/booscaaa/golang-clean-arch-hateoas-example/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/booscaaa/golang-clean-arch-hateoas-example.svg?style=for-the-badge"></a>
+    <a href="https://github.com/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example.svg?style=for-the-badge"></a>
     <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-red.svg?style=for-the-badge"></a>
-    <a href="https://github.com/booscaaa/golang-clean-arch-hateoas-example/actions?query=workflow%3ADeploy"><img alt="Build status" src="https://img.shields.io/github/workflow/status/booscaaa/golang-clean-arch-hateoas-example/Deploy?style=for-the-badge"></a>
-    <a href="https://codecov.io/gh/booscaaa/golang-clean-arch-hateoas-example"><img alt="Coverage" src="https://img.shields.io/codecov/c/github/booscaaa/golang-clean-arch-hateoas-example/master.svg?style=for-the-badge"></a>
+    <a href="https://github.com/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example/actions?query=workflow%3ADeploy"><img alt="Build status" src="https://img.shields.io/github/workflow/status/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example/Deploy?style=for-the-badge"></a>
+    <a href="https://codecov.io/gh/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example"><img alt="Coverage" src="https://img.shields.io/codecov/c/github/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example/master.svg?style=for-the-badge"></a>
     <a href="https://todo-list-hateoas.herokuapp.com/doc/index.html"><img alt="Swagger docs" src="https://img.shields.io/badge/api docs-swagger-purple?style=for-the-badge"></a>
   </p>
 </p>
@@ -47,9 +47,9 @@ To run this project in the development mode, you'll need to have a basic environ
 **Cloning the Repository**
 
 ```bash
-$ git clone https://github.com/booscaaa/golang-clean-arch-hateoas-example
+$ git clone https://github.com/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example
 
-$ cd golang-clean-arch-hateoas-example
+$ cd github.com/booscaaa/golang-clean-arch-hateoas-example
 ```
 
 <br>
@@ -143,4 +143,4 @@ Thank you!
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/booscaaa/golang-clean-arch-hateoas-example/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/booscaaa/github.com/booscaaa/golang-clean-arch-hateoas-example/blob/master/LICENSE) file for details

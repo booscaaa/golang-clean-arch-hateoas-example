@@ -3,10 +3,11 @@ package endpoint
 import (
 	"encoding/json"
 	"fmt"
-	"golang-clean-arch-hateoas-example/adapter/http/util"
-	"golang-clean-arch-hateoas-example/core/domain"
 	"net/http"
 	"strconv"
+
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/util"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 
 	"github.com/gorilla/mux"
 )
@@ -150,19 +151,19 @@ func (i Item) GetItemByID(response http.ResponseWriter, request *http.Request) {
 }
 
 // FetchItems goDoc
-// @Summary Fetch items by sigla
-// @Description Fetch items by sigla
+// @Summary Fetch items by initials
+// @Description Fetch items by initials
 // @Tags item
 // @Accept  json
 // @Produce  json
-// @Param sigla query string true "vnb"
+// @Param initials query string true "vnb"
 // @Success 200 {object} domain.Item
 // @Security ApiKeyAuth
 // @Router /item [get]
 func (i Item) FetchItems(response http.ResponseWriter, request *http.Request) {
-	sigla := request.FormValue("sigla")
+	initials := request.FormValue("initials")
 
-	items, err := i.Fetch(sigla)
+	items, err := i.Fetch(initials)
 
 	if err != nil {
 		response.WriteHeader(500)
