@@ -20,7 +20,7 @@ jobs:
     - name: Upload coverage report
       uses: codecov/codecov-action@v1.0.2
       with:
-        token: 49f83277-ece6-46e9-bae5-a1e2ba7530bb
+        token: 6038d723-d46a-42f6-86e9-be25abc3f191
         file: ./coverage.txt
         flags: unittests
         name: codecov-umbrella
