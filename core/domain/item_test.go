@@ -20,6 +20,7 @@ func TestNewItem(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	item, err := domain.NewItem(
 		fakeItem.ID,
@@ -49,6 +50,7 @@ func TestNewItemHateoasLinks(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	item, err := domain.NewItem(
 		fakeItem.ID,
@@ -73,7 +75,6 @@ func TestNewItemHateoasLinks(t *testing.T) {
 }
 
 func TestNewItemHateoasLinksEmpty(t *testing.T) {
-
 	item := domain.Item{}
 	itemHateoas, err := item.Hateoas()
 
@@ -89,6 +90,7 @@ func TestNewItemJsonItem(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	item, err := domain.NewItem(
 		fakeItem.ID,
@@ -120,6 +122,7 @@ func TestNewItemHateoasError(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	_, err = domain.NewItem(
 		0,
