@@ -156,8 +156,8 @@ func TestCreateItemRepository_AnyItemError(t *testing.T) {
 		fakeItem.ID,
 		fakeItem.Name,
 		"",
-		fakeItem.Date,
 		fakeItem.Initials,
+		fakeItem.Date,
 	))
 
 	_, err = itemRepository.Create(
