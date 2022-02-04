@@ -47,9 +47,9 @@ To run this project in the development mode, you'll need to have a basic environ
 **Cloning the Repository**
 
 ```bash
-$ git clone https://github.com/booscaaa/golang-clean-arch-hateoas-example
+git clone https://github.com/booscaaa/golang-clean-arch-hateoas-example
 
-$ cd github.com/booscaaa/golang-clean-arch-hateoas-example
+cd github.com/booscaaa/golang-clean-arch-hateoas-example
 ```
 
 <br>
@@ -74,7 +74,7 @@ config.json - this is my heroku app
 
 # Running with docker-compose !!!!!!!
 ```bash
-$ docker-compose up --build -d
+docker-compose up --build -d
 ```
 <br>
 <br>
@@ -88,12 +88,18 @@ go run main.go
 # Testing
 
 ```bash
-$ go test -v ./... 
+go test -v ./... 
 ```
 
 ## To get test coverage
 ```bash
-$ go test -v -coverprofile cover.out ./...
+go test -v -coverprofile cover.out ./...
+go tool cover -html=cover.out -o cover.html
+```
+
+## To get new mocks for testing
+```bash
+mockgen -source=core/domain/item.go -destination=core/domain/mocks/fake_item_repository.go -package=mocks
 ```
 
 <br>
