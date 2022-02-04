@@ -1,0 +1,1 @@
+SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY'), initials FROM item;

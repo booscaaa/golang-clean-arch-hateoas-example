@@ -20,7 +20,7 @@ func (db *itemRepository) Update(id int, name, description, date, initials strin
 
 	err := db.database.QueryRow(
 		ctx,
-		"UPDATE ITEM SET nome = $1, descricao = $2, data = to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS'), initials = $4 WHERE id = $5",
+		"UPDATE item SET nome = $1, descricao = $2, data = to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS'), initials = $4 WHERE id = $5",
 		name, description, date, initials, id,
 	).Scan(
 		&idA,

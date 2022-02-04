@@ -10,3 +10,41 @@ services:
       - 3333:3333
     volumes:
       - ./:/api
+
+  # elasticsearch:
+  #   image: 'docker.elastic.co/elasticsearch/elasticsearch:7.10.2'
+  #   environment:
+  #     - discovery.type=single-node
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #     - ELASTIC_USERNAME=elastic
+  #     - ELASTIC_PASSWORD=DkIedPPSCb
+  #   ports:
+  #     - "9200:9200"
+  #   volumes:
+  #     - esdata:/usr/share/elasticsearch/data
+
+  # logstash:
+  #   build:
+  #     context: logstash
+  #   volumes:
+  #     - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+  #     - ./logstash/pipelines/:/usr/share/logstash/pipeline/
+  #     - ./logstash/queries/:/usr/share/logstash/config/queries/
+  #   depends_on:
+  #     - elasticsearch
+
+  # kibana:
+  #   image: 'docker.elastic.co/kibana/kibana:7.10.2'
+  #   ports:
+  #     - "5601:5601"
+  #   hostname: kibana
+  #   depends_on:
+  #     - elasticsearch
+  #   volumes:
+  #     - ./kibana:/usr/share/kibana/config/
+
+volumes:
+  pgdata:
+    driver: local
+  esdata:
+    driver: local

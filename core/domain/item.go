@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
 )
 
 type Item struct {
@@ -29,6 +30,14 @@ type ItemRepository interface {
 	Delete(id int) (*Item, error)
 	Fetch(initials string) (*[]Item, error)
 	GetByID(id int) (*Item, error)
+}
+
+type ItemService interface {
+	CreateItem(response http.ResponseWriter, request *http.Request)
+	UpdateItem(response http.ResponseWriter, request *http.Request)
+	DeleteItem(response http.ResponseWriter, request *http.Request)
+	GetItemByID(response http.ResponseWriter, request *http.Request)
+	FetchItems(response http.ResponseWriter, request *http.Request)
 }
 
 func (item *Item) isValid() error {

@@ -6,7 +6,7 @@ type itemUseCase struct {
 	repository domain.ItemRepository
 }
 
-func ItemUseCaseImpl(repository domain.ItemRepository) domain.ItemUsecase {
+func NewItemUseCase(repository domain.ItemRepository) domain.ItemUsecase {
 	return &itemUseCase{
 		repository: repository,
 	}

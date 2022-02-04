@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/endpoint"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/item_service"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/util"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/postgres/item_repository"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/item"
@@ -23,18 +23,16 @@ func GenerateRoutes(conn *pgxpool.Pool) *mux.Router {
 	jsonApi.Use(cors)
 
 	itemRepository := item_repository.NewItemRepository(conn)
-
-	itemUseCase := endpoint.Item{
-		ItemUsecase: item.ItemUseCaseImpl(itemRepository),
-	}
+	itemUseCase := item.NewItemUseCase(itemRepository)
+	itemService := item_service.NewItemService(itemUseCase)
 
 	r.PathPrefix("/doc").Handler(httpSwagger.WrapHandler)
 
-	jsonApi.Handle("/item", http.HandlerFunc(itemUseCase.CreateItem)).Methods("POST", "OPTIONS").Name("/item")
-	jsonApi.Handle("/item/{id}", http.HandlerFunc(itemUseCase.UpdateItem)).Methods("PUT", "OPTIONS").Name("/item")
-	jsonApi.Handle("/item/{id}", http.HandlerFunc(itemUseCase.GetItemByID)).Methods("GET", "OPTIONS").Name("/item")
-	jsonApi.Handle("/item/{id}", http.HandlerFunc(itemUseCase.DeleteItem)).Methods("DELETE", "OPTIONS").Name("/item")
-	jsonApi.Handle("/item", http.HandlerFunc(itemUseCase.FetchItems)).Queries(
+	jsonApi.Handle("/item", http.HandlerFunc(itemService.CreateItem)).Methods("POST", "OPTIONS").Name("/item")
+	jsonApi.Handle("/item/{id}", http.HandlerFunc(itemService.UpdateItem)).Methods("PUT", "OPTIONS").Name("/item")
+	jsonApi.Handle("/item/{id}", http.HandlerFunc(itemService.GetItemByID)).Methods("GET", "OPTIONS").Name("/item")
+	jsonApi.Handle("/item/{id}", http.HandlerFunc(itemService.DeleteItem)).Methods("DELETE", "OPTIONS").Name("/item")
+	jsonApi.Handle("/item", http.HandlerFunc(itemService.FetchItems)).Queries(
 		"initials", "{initials}",
 	).Methods("GET", "OPTIONS")
 
