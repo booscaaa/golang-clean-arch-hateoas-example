@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 type Item struct {
-	ID          int    `json:"id" swaggerignore:"true"`
-	Name        string `json:"name" example:"Tarefa 1"`
-	Description string `json:"description" example:"Descrição da tarefa 1"`
-	Date        string `json:"date" example:"2021-02-02"`
-	Initials    string `json:"initials" example:"vin" maxLength:"3"`
-	Links       []Link `json:"_links"`
+	ID          int       `json:"id" swaggerignore:"true"`
+	Name        string    `json:"name" example:"Tarefa 1"`
+	Description string    `json:"description" example:"Descrição da tarefa 1"`
+	Date        time.Time `json:"date" example:"2021-02-02"`
+	Initials    string    `json:"initials" example:"vin" maxLength:"3"`
+	Links       []Link    `json:"_links"`
 }
 
 type ItemUsecase interface {
@@ -25,8 +26,8 @@ type ItemUsecase interface {
 }
 
 type ItemRepository interface {
-	Create(date, description, name, initials string) (*Item, error)
-	Update(id int, date, description, name, initials string) (*Item, error)
+	Create(date time.Time, description, name, initials string) (*Item, error)
+	Update(id int, date time.Time, description, name, initials string) (*Item, error)
 	Delete(id int) (*Item, error)
 	Fetch(initials string) (*[]Item, error)
 	GetByID(id int) (*Item, error)
@@ -47,7 +48,7 @@ func (item *Item) isValid() error {
 	return nil
 }
 
-func NewItem(id int, name string, description string, date string, initials string) (*Item, error) {
+func NewItem(id int, name string, description string, date time.Time, initials string) (*Item, error) {
 	item := Item{
 		ID:          id,
 		Name:        name,

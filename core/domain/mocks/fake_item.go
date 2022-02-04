@@ -7,6 +7,7 @@ package mocks
 import (
 	http "net/http"
 	reflect "reflect"
+	time "time"
 
 	domain "github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 	gomock "github.com/golang/mock/gomock"
@@ -134,7 +135,7 @@ func (m *MockItemRepository) EXPECT() *MockItemRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockItemRepository) Create(date, description, name, initials string) (*domain.Item, error) {
+func (m *MockItemRepository) Create(date time.Time, description, name, initials string) (*domain.Item, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", date, description, name, initials)
 	ret0, _ := ret[0].(*domain.Item)
@@ -194,7 +195,7 @@ func (mr *MockItemRepositoryMockRecorder) GetByID(id interface{}) *gomock.Call {
 }
 
 // Update mocks base method.
-func (m *MockItemRepository) Update(id int, date, description, name, initials string) (*domain.Item, error) {
+func (m *MockItemRepository) Update(id int, date time.Time, description, name, initials string) (*domain.Item, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", id, date, description, name, initials)
 	ret0, _ := ret[0].(*domain.Item)

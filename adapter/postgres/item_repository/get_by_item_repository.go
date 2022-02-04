@@ -2,6 +2,7 @@ package item_repository
 
 import (
 	"context"
+	"time"
 
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 )
@@ -10,14 +11,14 @@ func (db *itemRepository) GetByID(id int) (*domain.Item, error) {
 	var idA int
 	var nameA string
 	var descriptionA string
-	var dateA string
+	var dateA time.Time
 	var initialsA string
 
 	ctx := context.Background()
 
 	err := db.database.QueryRow(
 		ctx,
-		`SELECT id, nome, descricao, to_char(data, 'DD/MM/YYYY HH24:MI:SS'), initials FROM item where id = $1 ORDER BY data asc;`,
+		`SELECT id, name, description, date, initials FROM item where id = $1;`,
 		id,
 	).Scan(
 		&idA,

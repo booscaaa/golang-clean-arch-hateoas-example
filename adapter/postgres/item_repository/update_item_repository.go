@@ -3,31 +3,32 @@ package item_repository
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 
 	"github.com/jackc/pgx/v4"
 )
 
-func (db *itemRepository) Update(id int, name, description, date, initials string) (*domain.Item, error) {
+func (db *itemRepository) Update(id int, date time.Time, name, description, initials string) (*domain.Item, error) {
 	var idA int
 	var nameA string
 	var descriptionA string
-	var dateA string
+	var dateA time.Time
 	var initialsA string
 
 	ctx := context.Background()
 
 	err := db.database.QueryRow(
 		ctx,
-		"UPDATE item SET nome = $1, descricao = $2, data = to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS'), initials = $4 WHERE id = $5",
+		"UPDATE item SET name = $1, description = $2, date = to_timestamp($3, 'YYYY-MM-DD HH24:MI:SS'), initials = $4 WHERE id = $5",
 		name, description, date, initials, id,
 	).Scan(
 		&idA,
 		&nameA,
 		&descriptionA,
-		&dateA,
 		&initialsA,
+		&dateA,
 	)
 
 	if err == pgx.ErrNoRows {

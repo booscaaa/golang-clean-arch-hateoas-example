@@ -45,9 +45,9 @@ func TestUpdateItemRepository(t *testing.T) {
 
 	item, err := itemRepository.Update(
 		fakeInsertItem.ID,
+		fakeInsertItem.Date,
 		fakeInsertItem.Name,
 		fakeInsertItem.Description,
-		fakeInsertItem.Date,
 		fakeInsertItem.Initials,
 	)
 
@@ -100,9 +100,9 @@ func TestUpdateItemRepository_AnyDBError(t *testing.T) {
 
 	_, err = itemRepository.Update(
 		fakeInsertItem.ID,
+		fakeInsertItem.Date,
 		fakeInsertItem.Name,
 		fakeInsertItem.Description,
-		fakeInsertItem.Date,
 		fakeInsertItem.Initials,
 	)
 
@@ -141,9 +141,9 @@ func TestUpdateItemRepository_NoRows(t *testing.T) {
 
 	_, err = itemRepository.Update(
 		fakeInsertItem.ID,
+		fakeInsertItem.Date,
 		fakeInsertItem.Name,
 		fakeInsertItem.Description,
-		fakeInsertItem.Date,
 		fakeInsertItem.Initials,
 	)
 
@@ -188,9 +188,9 @@ func TestUpdateItemRepository_AnyItemError(t *testing.T) {
 
 	_, err = itemRepository.Update(
 		fakeInsertItem.ID,
+		fakeInsertItem.Date,
 		fakeInsertItem.Name,
 		fakeInsertItem.Description,
-		fakeInsertItem.Date,
 		fakeInsertItem.Initials,
 	)
 

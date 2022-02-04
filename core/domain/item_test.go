@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 	"github.com/bxcodec/faker/v3"
@@ -37,7 +38,7 @@ func TestNewItem(t *testing.T) {
 }
 
 func TestNewItemWithoutInitials(t *testing.T) {
-	_, err := domain.NewItem(1, "", "", "", "")
+	_, err := domain.NewItem(1, "", "", time.Now(), "")
 	require.NotNil(t, err)
 }
 

@@ -3,6 +3,7 @@ package item_repository
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 
@@ -13,7 +14,7 @@ func (db *itemRepository) Delete(id int) (*domain.Item, error) {
 	var idA int
 	var nameA string
 	var descriptionA string
-	var dateA string
+	var dateA time.Time
 	var initialsA string
 
 	ctx := context.Background()
@@ -26,8 +27,8 @@ func (db *itemRepository) Delete(id int) (*domain.Item, error) {
 		&idA,
 		&nameA,
 		&descriptionA,
-		&dateA,
 		&initialsA,
+		&dateA,
 	)
 
 	if err == pgx.ErrNoRows {
