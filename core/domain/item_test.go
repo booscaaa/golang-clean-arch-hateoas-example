@@ -14,27 +14,27 @@ import (
 )
 
 func TestNewItem(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	item, err := domain.NewItem(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	)
 
 	require.Nil(t, err)
-	require.Equal(t, item.ID, fakeInsertItem.ID)
-	require.Equal(t, item.Name, fakeInsertItem.Name)
-	require.Equal(t, item.Description, fakeInsertItem.Description)
-	require.Equal(t, item.Date, fakeInsertItem.Date)
-	require.Equal(t, item.Initials, fakeInsertItem.Initials)
+	require.Equal(t, item.ID, fakeItem.ID)
+	require.Equal(t, item.Name, fakeItem.Name)
+	require.Equal(t, item.Description, fakeItem.Description)
+	require.Equal(t, item.Date, fakeItem.Date)
+	require.Equal(t, item.Initials, fakeItem.Initials)
 }
 
 func TestNewItemWithoutInitials(t *testing.T) {
@@ -43,19 +43,19 @@ func TestNewItemWithoutInitials(t *testing.T) {
 }
 
 func TestNewItemHateoasLinks(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	item, err := domain.NewItem(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	)
 
 	require.Nil(t, err)
@@ -83,19 +83,19 @@ func TestNewItemHateoasLinksEmpty(t *testing.T) {
 }
 
 func TestNewItemJsonItem(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	item, err := domain.NewItem(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	)
 
 	require.Nil(t, err)
@@ -106,27 +106,27 @@ func TestNewItemJsonItem(t *testing.T) {
 	nItem, err := domain.FromJSONItem(strings.NewReader(string(json)))
 
 	require.Nil(t, err)
-	require.Equal(t, nItem.ID, fakeInsertItem.ID)
-	require.Equal(t, nItem.Name, fakeInsertItem.Name)
-	require.Equal(t, nItem.Description, fakeInsertItem.Description)
-	require.Equal(t, nItem.Date, fakeInsertItem.Date)
-	require.Equal(t, nItem.Initials, fakeInsertItem.Initials)
+	require.Equal(t, nItem.ID, fakeItem.ID)
+	require.Equal(t, nItem.Name, fakeItem.Name)
+	require.Equal(t, nItem.Description, fakeItem.Description)
+	require.Equal(t, nItem.Date, fakeItem.Date)
+	require.Equal(t, nItem.Initials, fakeItem.Initials)
 }
 
 func TestNewItemHateoasError(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	_, err = domain.NewItem(
 		0,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	)
 
 	if err == nil {

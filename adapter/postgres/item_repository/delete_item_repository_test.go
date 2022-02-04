@@ -14,9 +14,9 @@ import (
 
 func TestDeleteItemRepository(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -30,17 +30,17 @@ func TestDeleteItemRepository(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("DELETE FROM item").WithArgs(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
+		fakeItem.Date,
 	))
 
 	itemDeleted, err := itemRepository.Delete(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	)
 
 	if err != nil {
@@ -53,15 +53,15 @@ func TestDeleteItemRepository(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, itemDeleted.ID)
-	require.Equal(t, itemDeleted.Name, fakeInsertItem.Name)
-	require.Equal(t, itemDeleted.Date, fakeInsertItem.Date)
-	require.Equal(t, itemDeleted.Initials, fakeInsertItem.Initials)
+	require.Equal(t, itemDeleted.Name, fakeItem.Name)
+	require.Equal(t, itemDeleted.Date, fakeItem.Date)
+	require.Equal(t, itemDeleted.Initials, fakeItem.Initials)
 }
 
 func TestDeleteItemRepository_NoRows(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -75,11 +75,11 @@ func TestDeleteItemRepository_NoRows(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("DELETE FROM item ").WithArgs(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	).WillReturnError(pgx.ErrNoRows)
 
 	_, err = itemRepository.Delete(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	)
 
 	if err.Error() != "Item not deleted" {
@@ -92,9 +92,9 @@ func TestDeleteItemRepository_NoRows(t *testing.T) {
 }
 
 func TestDeleteItemRepository_AnyDBError(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -108,11 +108,11 @@ func TestDeleteItemRepository_AnyDBError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("DELETE FROM item").WithArgs(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	).WillReturnError(fmt.Errorf("Any db problem"))
 
 	_, err = itemRepository.Delete(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	)
 
 	if err == nil {
@@ -126,9 +126,9 @@ func TestDeleteItemRepository_AnyDBError(t *testing.T) {
 
 func TestDeleteItemRepository_AnyItemError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -142,17 +142,17 @@ func TestDeleteItemRepository_AnyItemError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("DELETE FROM item").WithArgs(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
+		fakeItem.ID,
+		fakeItem.Name,
 		"",
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	_, err = itemRepository.Delete(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 	)
 
 	if err == nil {

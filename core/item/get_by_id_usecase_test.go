@@ -13,9 +13,9 @@ import (
 )
 
 func TestGetByIDUseCase(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -23,7 +23,7 @@ func TestGetByIDUseCase(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemRepository := mocks.NewMockItemRepository(mockCtrl)
-	mockItemRepository.EXPECT().GetByID(1).Return(&fakeInsertItem, nil)
+	mockItemRepository.EXPECT().GetByID(1).Return(&fakeItem, nil)
 
 	itemUseCase := item.NewItemUseCase(mockItemRepository)
 
@@ -35,15 +35,15 @@ func TestGetByIDUseCase(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, item.ID)
-	require.Equal(t, item.Name, fakeInsertItem.Name)
-	require.Equal(t, item.Date, fakeInsertItem.Date)
-	require.Equal(t, item.Initials, fakeInsertItem.Initials)
+	require.Equal(t, item.Name, fakeItem.Name)
+	require.Equal(t, item.Date, fakeItem.Date)
+	require.Equal(t, item.Initials, fakeItem.Initials)
 }
 
 func TestGetByIDUseCase_Error(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}

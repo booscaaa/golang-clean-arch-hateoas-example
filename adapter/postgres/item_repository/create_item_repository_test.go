@@ -14,9 +14,9 @@ import (
 
 func TestCreateItemRepository(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -30,20 +30,20 @@ func TestCreateItemRepository(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("INSERT INTO item (.+)").WithArgs(
-		fakeInsertItem.Name, fakeInsertItem.Description, fakeInsertItem.Date, fakeInsertItem.Initials,
+		fakeItem.Name, fakeItem.Description, fakeItem.Date, fakeItem.Initials,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
+		fakeItem.Date,
 	))
 
 	itemCreated, err := itemRepository.Create(
-		fakeInsertItem.Date,
-		fakeInsertItem.Description,
-		fakeInsertItem.Name,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Description,
+		fakeItem.Name,
+		fakeItem.Initials,
 	)
 
 	if err != nil {
@@ -56,15 +56,15 @@ func TestCreateItemRepository(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, itemCreated.ID)
-	require.Equal(t, itemCreated.Name, fakeInsertItem.Name)
-	require.Equal(t, itemCreated.Date, fakeInsertItem.Date)
-	require.Equal(t, itemCreated.Initials, fakeInsertItem.Initials)
+	require.Equal(t, itemCreated.Name, fakeItem.Name)
+	require.Equal(t, itemCreated.Date, fakeItem.Date)
+	require.Equal(t, itemCreated.Initials, fakeItem.Initials)
 }
 
 func TestCreateItemRepository_NoRows(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -78,14 +78,14 @@ func TestCreateItemRepository_NoRows(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("INSERT INTO item (.+)").WithArgs(
-		fakeInsertItem.Name, fakeInsertItem.Description, fakeInsertItem.Date, fakeInsertItem.Initials,
+		fakeItem.Name, fakeItem.Description, fakeItem.Date, fakeItem.Initials,
 	).WillReturnError(pgx.ErrNoRows)
 
 	_, err = itemRepository.Create(
-		fakeInsertItem.Date,
-		fakeInsertItem.Description,
-		fakeInsertItem.Name,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Description,
+		fakeItem.Name,
+		fakeItem.Initials,
 	)
 
 	if err.Error() != "Item not created" {
@@ -98,9 +98,9 @@ func TestCreateItemRepository_NoRows(t *testing.T) {
 }
 
 func TestCreateItemRepository_AnyDBError(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -114,14 +114,14 @@ func TestCreateItemRepository_AnyDBError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("INSERT INTO item (.+)").WithArgs(
-		fakeInsertItem.Name, fakeInsertItem.Description, fakeInsertItem.Date, fakeInsertItem.Initials,
+		fakeItem.Name, fakeItem.Description, fakeItem.Date, fakeItem.Initials,
 	).WillReturnError(fmt.Errorf("Any db problem"))
 
 	_, err = itemRepository.Create(
-		fakeInsertItem.Date,
-		fakeInsertItem.Description,
-		fakeInsertItem.Name,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Description,
+		fakeItem.Name,
+		fakeItem.Initials,
 	)
 
 	if err == nil {
@@ -135,9 +135,9 @@ func TestCreateItemRepository_AnyDBError(t *testing.T) {
 
 func TestCreateItemRepository_AnyItemError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -151,20 +151,20 @@ func TestCreateItemRepository_AnyItemError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("INSERT INTO item (.+)").WithArgs(
-		fakeInsertItem.Name, "", fakeInsertItem.Date, fakeInsertItem.Initials,
+		fakeItem.Name, "", fakeItem.Date, fakeItem.Initials,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
+		fakeItem.ID,
+		fakeItem.Name,
 		"",
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	_, err = itemRepository.Create(
-		fakeInsertItem.Date,
+		fakeItem.Date,
 		"",
-		fakeInsertItem.Name,
-		fakeInsertItem.Initials,
+		fakeItem.Name,
+		fakeItem.Initials,
 	)
 
 	if err == nil {

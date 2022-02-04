@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/item_service"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
@@ -15,19 +16,20 @@ import (
 )
 
 func TestDeleteItemService(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemUseCase := mocks.NewMockItemUsecase(mockCtrl)
 	mockItemUseCase.EXPECT().Delete(
 		1,
-	).Return(&fakeInsertItem, nil)
+	).Return(&fakeItem, nil)
 
 	itemService := item_service.NewItemService(mockItemUseCase)
 
@@ -52,12 +54,13 @@ func TestDeleteItemService(t *testing.T) {
 }
 
 func TestDeleteItemService_ParamsIDError(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
@@ -80,12 +83,13 @@ func TestDeleteItemService_ParamsIDError(t *testing.T) {
 }
 
 func TestDeleteItemService_ItemError(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()

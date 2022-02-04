@@ -13,9 +13,9 @@ import (
 
 func TestGetItemByIDRepository(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -31,11 +31,11 @@ func TestGetItemByIDRepository(t *testing.T) {
 	mock.ExpectQuery("SELECT (.+) FROM item where").WithArgs(
 		1,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	item, err := itemRepository.GetByID(1)
@@ -50,17 +50,17 @@ func TestGetItemByIDRepository(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, item.ID)
-	require.Equal(t, item.Name, fakeInsertItem.Name)
-	require.Equal(t, item.Date, fakeInsertItem.Date)
-	require.Equal(t, item.Initials, fakeInsertItem.Initials)
+	require.Equal(t, item.Name, fakeItem.Name)
+	require.Equal(t, item.Date, fakeItem.Date)
+	require.Equal(t, item.Initials, fakeItem.Initials)
 
 }
 
 func TestGetItemByIDRepository_AnyDBError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -76,11 +76,11 @@ func TestGetItemByIDRepository_AnyDBError(t *testing.T) {
 	mock.ExpectQuery("SELECT (.+) FROM item").WithArgs(
 		1,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 		1,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	_, err = itemRepository.GetByID(1)
@@ -95,9 +95,9 @@ func TestGetItemByIDRepository_AnyDBError(t *testing.T) {
 }
 
 // func TestGetItemByIDRepository_ScanErro(t *testing.T) {
-// 	fakeInsertItem := domain.Item{}
+// 	fakeItem := domain.Item{}
 
-// 	err := faker.FakeData(&fakeInsertItem)
+// 	err := faker.FakeData(&fakeItem)
 // 	if err != nil {
 // 		fmt.Println(err)
 // 	}
@@ -127,9 +127,9 @@ func TestGetItemByIDRepository_AnyDBError(t *testing.T) {
 
 func TestGetItemByIDRepository_AnyItemError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -145,11 +145,11 @@ func TestGetItemByIDRepository_AnyItemError(t *testing.T) {
 	mock.ExpectQuery("SELECT (.+) FROM item where").WithArgs(
 		1,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
+		fakeItem.ID,
+		fakeItem.Name,
 		"",
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	_, err = itemRepository.GetByID(1)

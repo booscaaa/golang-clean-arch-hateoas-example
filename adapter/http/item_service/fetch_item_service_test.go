@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/item_service"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
@@ -14,19 +15,20 @@ import (
 )
 
 func TestFetchItemService(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemUseCase := mocks.NewMockItemUsecase(mockCtrl)
 	mockItemUseCase.EXPECT().Fetch(
-		fakeInsertItem.Initials,
-	).Return(&[]domain.Item{fakeInsertItem}, nil)
+		fakeItem.Initials,
+	).Return(&[]domain.Item{fakeItem}, nil)
 
 	itemService := item_service.NewItemService(mockItemUseCase)
 
@@ -35,7 +37,7 @@ func TestFetchItemService(t *testing.T) {
 	r.Header.Set("Content-Type", "application/json")
 
 	q := r.URL.Query()
-	q.Add("initials", fakeInsertItem.Initials)
+	q.Add("initials", fakeItem.Initials)
 	r.URL.RawQuery = q.Encode()
 
 	itemService.FetchItems(w, r)
@@ -49,18 +51,19 @@ func TestFetchItemService(t *testing.T) {
 }
 
 func TestFetchItemService_ItemError(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
+	fakeItem.Date, _ = time.Parse("2006-01-02T15:04:00Z", "2022-01-13T15:04:00Z")
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemUseCase := mocks.NewMockItemUsecase(mockCtrl)
 	mockItemUseCase.EXPECT().Fetch(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	).Return(nil, fmt.Errorf("Any item error"))
 
 	itemService := item_service.NewItemService(mockItemUseCase)
@@ -70,7 +73,7 @@ func TestFetchItemService_ItemError(t *testing.T) {
 	r.Header.Set("Content-Type", "application/json")
 
 	q := r.URL.Query()
-	q.Add("initials", fakeInsertItem.Initials)
+	q.Add("initials", fakeItem.Initials)
 	r.URL.RawQuery = q.Encode()
 
 	itemService.FetchItems(w, r)

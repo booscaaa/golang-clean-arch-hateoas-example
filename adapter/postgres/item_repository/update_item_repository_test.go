@@ -14,9 +14,9 @@ import (
 
 func TestUpdateItemRepository(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -30,25 +30,25 @@ func TestUpdateItemRepository(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("UPDATE item SET").WithArgs(
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
-		fakeInsertItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
+		fakeItem.ID,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
+		fakeItem.Date,
 	))
 
 	item, err := itemRepository.Update(
-		fakeInsertItem.ID,
-		fakeInsertItem.Date,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Date,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
 	)
 
 	if err != nil {
@@ -61,17 +61,17 @@ func TestUpdateItemRepository(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, item.ID)
-	require.Equal(t, item.Name, fakeInsertItem.Name)
-	require.Equal(t, item.Date, fakeInsertItem.Date)
-	require.Equal(t, item.Initials, fakeInsertItem.Initials)
+	require.Equal(t, item.Name, fakeItem.Name)
+	require.Equal(t, item.Date, fakeItem.Date)
+	require.Equal(t, item.Initials, fakeItem.Initials)
 
 }
 
 func TestUpdateItemRepository_AnyDBError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -85,25 +85,25 @@ func TestUpdateItemRepository_AnyDBError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("UPDATE item SET").WithArgs(
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
-		fakeInsertItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
+		fakeItem.ID,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 		1,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Description,
+		fakeItem.Initials,
+		fakeItem.Date,
 	))
 
 	_, err = itemRepository.Update(
-		fakeInsertItem.ID,
-		fakeInsertItem.Date,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Date,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
 	)
 
 	if err == nil {
@@ -116,9 +116,9 @@ func TestUpdateItemRepository_AnyDBError(t *testing.T) {
 }
 
 func TestUpdateItemRepository_NoRows(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -132,19 +132,19 @@ func TestUpdateItemRepository_NoRows(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("UPDATE item SET").WithArgs(
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
-		fakeInsertItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
+		fakeItem.ID,
 	).WillReturnError(pgx.ErrNoRows)
 
 	_, err = itemRepository.Update(
-		fakeInsertItem.ID,
-		fakeInsertItem.Date,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Date,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
 	)
 
 	if err.Error() != "Item not updated" {
@@ -157,9 +157,9 @@ func TestUpdateItemRepository_NoRows(t *testing.T) {
 }
 func TestUpdateItemRepository_AnyItemError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -173,25 +173,25 @@ func TestUpdateItemRepository_AnyItemError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("UPDATE item SET").WithArgs(
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
-		fakeInsertItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
+		fakeItem.ID,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
+		fakeItem.ID,
+		fakeItem.Name,
 		"",
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
+		fakeItem.Date,
 	))
 
 	_, err = itemRepository.Update(
-		fakeInsertItem.ID,
-		fakeInsertItem.Date,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Date,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Initials,
 	)
 
 	if err == nil {

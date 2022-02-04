@@ -13,9 +13,9 @@ import (
 )
 
 func TestFetchItensUseCase(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -23,11 +23,11 @@ func TestFetchItensUseCase(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemRepository := mocks.NewMockItemRepository(mockCtrl)
-	mockItemRepository.EXPECT().Fetch(fakeInsertItem.Initials).Return(&[]domain.Item{fakeInsertItem}, nil)
+	mockItemRepository.EXPECT().Fetch(fakeItem.Initials).Return(&[]domain.Item{fakeItem}, nil)
 
 	itemUseCase := item.NewItemUseCase(mockItemRepository)
 
-	items, err := itemUseCase.Fetch(fakeInsertItem.Initials)
+	items, err := itemUseCase.Fetch(fakeItem.Initials)
 
 	if err != nil {
 		t.Errorf("error was not expected while updating stats: %s", err)
@@ -36,17 +36,17 @@ func TestFetchItensUseCase(t *testing.T) {
 	for _, item := range *items {
 		require.Nil(t, err)
 		require.NotEmpty(t, item.ID)
-		require.Equal(t, item.Name, fakeInsertItem.Name)
-		require.Equal(t, item.Date, fakeInsertItem.Date)
-		require.Equal(t, item.Initials, fakeInsertItem.Initials)
+		require.Equal(t, item.Name, fakeItem.Name)
+		require.Equal(t, item.Date, fakeItem.Date)
+		require.Equal(t, item.Initials, fakeItem.Initials)
 	}
 
 }
 
 func TestFetchItensUseCase_Error(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -54,11 +54,11 @@ func TestFetchItensUseCase_Error(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemRepository := mocks.NewMockItemRepository(mockCtrl)
-	mockItemRepository.EXPECT().Fetch(fakeInsertItem.Initials).Return(nil, fmt.Errorf("Any Error"))
+	mockItemRepository.EXPECT().Fetch(fakeItem.Initials).Return(nil, fmt.Errorf("Any Error"))
 
 	itemUseCase := item.NewItemUseCase(mockItemRepository)
 
-	_, err = itemUseCase.Fetch(fakeInsertItem.Initials)
+	_, err = itemUseCase.Fetch(fakeItem.Initials)
 
 	if err == nil {
 		t.Errorf("error was not expected while updating stats: %s", err)

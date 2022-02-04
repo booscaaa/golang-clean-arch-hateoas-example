@@ -13,9 +13,9 @@ import (
 )
 
 func TestUpdateItemUseCase(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -24,16 +24,16 @@ func TestUpdateItemUseCase(t *testing.T) {
 	defer mockCtrl.Finish()
 	mockItemRepository := mocks.NewMockItemRepository(mockCtrl)
 	mockItemRepository.EXPECT().Update(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
-	).Return(&fakeInsertItem, nil)
+		fakeItem.ID,
+		fakeItem.Date,
+		fakeItem.Description,
+		fakeItem.Name,
+		fakeItem.Initials,
+	).Return(&fakeItem, nil)
 
 	itemUseCase := item.NewItemUseCase(mockItemRepository)
 
-	item, err := itemUseCase.Update(fakeInsertItem)
+	item, err := itemUseCase.Update(fakeItem)
 
 	if err != nil {
 		t.Errorf("error was not expected while updating stats: %s", err)
@@ -41,15 +41,15 @@ func TestUpdateItemUseCase(t *testing.T) {
 
 	require.Nil(t, err)
 	require.NotEmpty(t, item.ID)
-	require.Equal(t, item.Name, fakeInsertItem.Name)
-	require.Equal(t, item.Date, fakeInsertItem.Date)
-	require.Equal(t, item.Initials, fakeInsertItem.Initials)
+	require.Equal(t, item.Name, fakeItem.Name)
+	require.Equal(t, item.Date, fakeItem.Date)
+	require.Equal(t, item.Initials, fakeItem.Initials)
 }
 
 func TestUpdateItemUseCase_Error(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -58,16 +58,16 @@ func TestUpdateItemUseCase_Error(t *testing.T) {
 	defer mockCtrl.Finish()
 	mockItemRepository := mocks.NewMockItemRepository(mockCtrl)
 	mockItemRepository.EXPECT().Update(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Date,
+		fakeItem.Description,
+		fakeItem.Name,
+		fakeItem.Initials,
 	).Return(nil, fmt.Errorf("Any Error"))
 
 	itemUseCase := item.NewItemUseCase(mockItemRepository)
 
-	_, err = itemUseCase.Update(fakeInsertItem)
+	_, err = itemUseCase.Update(fakeItem)
 
 	if err == nil {
 		t.Errorf("error was not expected while updating stats: %s", err)

@@ -13,9 +13,9 @@ import (
 
 func TestFetchItensRepository(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -29,17 +29,17 @@ func TestFetchItensRepository(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("SELECT (.+) FROM item").WithArgs(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.ID,
+		fakeItem.Name,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	itensFetch, err := itemRepository.Fetch(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	)
 
 	if err != nil {
@@ -53,18 +53,18 @@ func TestFetchItensRepository(t *testing.T) {
 	for _, item := range *itensFetch {
 		require.Nil(t, err)
 		require.NotEmpty(t, item.ID)
-		require.Equal(t, item.Name, fakeInsertItem.Name)
-		require.Equal(t, item.Date, fakeInsertItem.Date)
-		require.Equal(t, item.Initials, fakeInsertItem.Initials)
+		require.Equal(t, item.Name, fakeItem.Name)
+		require.Equal(t, item.Date, fakeItem.Date)
+		require.Equal(t, item.Initials, fakeItem.Initials)
 	}
 
 }
 
 func TestFetchItensRepository_AnyDBError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -78,17 +78,17 @@ func TestFetchItensRepository_AnyDBError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("SELECT (.+) FROM item").WithArgs(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
+		fakeItem.ID,
 		1,
-		fakeInsertItem.Description,
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Description,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	_, err = itemRepository.Fetch(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	)
 
 	if err == nil {
@@ -101,9 +101,9 @@ func TestFetchItensRepository_AnyDBError(t *testing.T) {
 }
 
 func TestFetchItensRepository_ScanErro(t *testing.T) {
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -117,11 +117,11 @@ func TestFetchItensRepository_ScanErro(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("SELECT (.+) FROM item").WithArgs(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	).WillReturnError(fmt.Errorf("Any db problem"))
 
 	_, err = itemRepository.Fetch(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	)
 
 	if err == nil {
@@ -135,9 +135,9 @@ func TestFetchItensRepository_ScanErro(t *testing.T) {
 
 func TestFetchItensRepository_AnyItemError(t *testing.T) {
 	cols := []string{"id", "name", "description", "date", "initials"}
-	fakeInsertItem := domain.Item{}
+	fakeItem := domain.Item{}
 
-	err := faker.FakeData(&fakeInsertItem)
+	err := faker.FakeData(&fakeItem)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -151,17 +151,17 @@ func TestFetchItensRepository_AnyItemError(t *testing.T) {
 	itemRepository := item_repository.NewItemRepository(mock)
 
 	mock.ExpectQuery("SELECT (.+) FROM item").WithArgs(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	).WillReturnRows(pgxmock.NewRows(cols).AddRow(
-		fakeInsertItem.ID,
-		fakeInsertItem.Name,
+		fakeItem.ID,
+		fakeItem.Name,
 		"",
-		fakeInsertItem.Date,
-		fakeInsertItem.Initials,
+		fakeItem.Date,
+		fakeItem.Initials,
 	))
 
 	_, err = itemRepository.Fetch(
-		fakeInsertItem.Initials,
+		fakeItem.Initials,
 	)
 
 	if err == nil {
