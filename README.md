@@ -82,12 +82,14 @@ docker-compose up --build -d
 # Running local
 
 ```bash
+go mod tidy
 go run main.go
 ```
 
 # Testing
 
 ```bash
+go mod tidy
 go test -v ./... 
 ```
 
@@ -123,13 +125,10 @@ mockgen -source=core/domain/item.go -destination=core/domain/mocks/fake_item_rep
 ## Api application built With
 
 - [Golang](https://golang.org/)
-- [Govalidator](https://github.com/asaskevich/govalidator)
 - [Gorilla Handlers](https://github.com/gorilla/handlers)
 - [Gorilla Mux](https://github.com/gorilla/mux)
-- [Go dotenv](https://github.com/joho/godotenv)
-- [Lib PQ](https://github.com/lib/pq)
-- [GO sqlmock](https://github.com/DATA-DOG/go-sqlmock)
-- [Mockery](https://github.com/vektra/mockery/v2)
+- [Viper](https://github.com/spf13/viper)
+- [PGX](https://github.com/jackc/pgx)
 - [Swaggo](https://github.com/swaggo/http-swagger)
 - [Testfy](https://github.com/stretchr/testify)
 
