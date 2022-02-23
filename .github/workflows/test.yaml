@@ -15,7 +15,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Download swaggo
-      run: go install github.com/swaggo/swag/cmd/swag@latest
+      run: go install github.com/swaggo/swag/cmd/swag@v1.7.0
     - name: Install swaggo
       run: swag init -g adapter/http_service/main.go -o adapter/http_service/docs
     - name: Test
