@@ -15,6 +15,7 @@ require (
 require github.com/bxcodec/faker/v3 v3.7.0
 
 require (
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/booscaaa/go-hateoas v1.0.0
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/handlers v1.5.1

@@ -2,10 +2,6 @@ basePath: /
 definitions:
   domain.Item:
     properties:
-      _links:
-        items:
-          $ref: '#/definitions/domain.Link'
-        type: array
       date:
         example: "2021-02-02"
         type: string
@@ -18,18 +14,6 @@ definitions:
         type: string
       name:
         example: Tarefa 1
-        type: string
-    type: object
-  domain.Link:
-    properties:
-      doc:
-        example: http(s)://<DOMAIN_OR_IP>/doc/index.html
-        type: string
-      href:
-        example: http(s)://<DOMAIN_OR_IP>/item/{id}
-        type: string
-      method:
-        example: GET
         type: string
     type: object
 host: todo-list-hateoas.herokuapp.com

@@ -212,12 +212,6 @@
         "domain.Item": {
             "type": "object",
             "properties": {
-                "_links": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/domain.Link"
-                    }
-                },
                 "date": {
                     "type": "string",
                     "example": "2021-02-02"
@@ -234,23 +228,6 @@
                 "name": {
                     "type": "string",
                     "example": "Tarefa 1"
-                }
-            }
-        },
-        "domain.Link": {
-            "type": "object",
-            "properties": {
-                "doc": {
-                    "type": "string",
-                    "example": "http(s)://\u003cDOMAIN_OR_IP\u003e/doc/index.html"
-                },
-                "href": {
-                    "type": "string",
-                    "example": "http(s)://\u003cDOMAIN_OR_IP\u003e/item/{id}"
-                },
-                "method": {
-                    "type": "string",
-                    "example": "GET"
                 }
             }
         }

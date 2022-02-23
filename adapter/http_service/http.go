@@ -17,16 +17,6 @@ import (
 	_ "github.com/booscaaa/golang-clean-arch-hateoas-example/docs"
 )
 
-// @title Clean architecture and Level 3 of REST
-// @version 2021.12.5.0
-// @description An application of studies on the implementation of clean architecture with golang with a plus of REST level 3 implementations
-// @termsOfService todo-list-hateoas.herokuapp.com
-// @contact.name Vinícius Boscardin
-// @contact.email boscardinvinicius@gmail.com
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host todo-list-hateoas.herokuapp.com
-// @BasePath /
 func Run() {
 	ctx := context.Background()
 	conn := postgres.GetConnection(ctx)
@@ -35,13 +25,13 @@ func Run() {
 	itemService := di.ItemHttpInjection(conn)
 
 	router := mux.NewRouter()
+	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
+
 	jsonApiRouter := router.PathPrefix("/").Subrouter()
 	jsonApiRouter.Use(util.Cors)
 	jsonApiRouter.Use(apmgorilla.Middleware())
 
 	apmgorilla.Instrument(jsonApiRouter)
-
-	router.PathPrefix("/doc").Handler(httpSwagger.WrapHandler)
 
 	jsonApiRouter.Handle("/item", http.HandlerFunc(itemService.CreateItem)).Methods("POST", "OPTIONS").Name("/item")
 	jsonApiRouter.Handle("/item/{id}", http.HandlerFunc(itemService.UpdateItem)).Methods("PUT", "OPTIONS").Name("/item")
