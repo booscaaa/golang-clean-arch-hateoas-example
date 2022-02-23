@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/item_service"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http_service/item_service"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain/mocks"
 	"github.com/bxcodec/faker/v3"

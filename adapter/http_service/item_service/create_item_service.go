@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/util"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http_service/util"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 )
 

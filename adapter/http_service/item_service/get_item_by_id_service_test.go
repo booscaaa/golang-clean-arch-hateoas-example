@@ -1,22 +1,21 @@
 package item_service_test
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 	"time"
 
-	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/item_service"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http_service/item_service"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain/mocks"
 	"github.com/bxcodec/faker/v3"
 	"github.com/golang/mock/gomock"
+	"github.com/gorilla/mux"
 )
 
-func TestCreateItemService(t *testing.T) {
+func TestGetItemByIDService(t *testing.T) {
 	fakeItem := domain.Item{}
 
 	err := faker.FakeData(&fakeItem)
@@ -28,17 +27,23 @@ func TestCreateItemService(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemUseCase := mocks.NewMockItemUsecase(mockCtrl)
-	mockItemUseCase.EXPECT().Create(
-		fakeItem,
+	mockItemUseCase.EXPECT().GetByID(
+		1,
 	).Return(&fakeItem, nil)
 
 	itemService := item_service.NewItemService(mockItemUseCase)
 
-	payload, _ := json.Marshal(fakeItem)
 	w := httptest.NewRecorder()
-	r := httptest.NewRequest(http.MethodPost, "/item", strings.NewReader(string(payload)))
+	r := httptest.NewRequest(http.MethodGet, "/item/1", nil)
 	r.Header.Set("Content-Type", "application/json")
-	itemService.CreateItem(w, r)
+
+	vars := map[string]string{
+		"id": "1",
+	}
+
+	r = mux.SetURLVars(r, vars)
+
+	itemService.GetItemByID(w, r)
 
 	res := w.Result()
 	defer res.Body.Close()
@@ -48,7 +53,7 @@ func TestCreateItemService(t *testing.T) {
 	}
 }
 
-func TestCreateItemService_JsonErrorFormater(t *testing.T) {
+func TestGetItemByIDService_ParamsIDError(t *testing.T) {
 	fakeItem := domain.Item{}
 
 	err := faker.FakeData(&fakeItem)
@@ -64,9 +69,10 @@ func TestCreateItemService_JsonErrorFormater(t *testing.T) {
 	itemService := item_service.NewItemService(mockItemUseCase)
 
 	w := httptest.NewRecorder()
-	r := httptest.NewRequest(http.MethodPost, "/item", strings.NewReader("abc"))
+	r := httptest.NewRequest(http.MethodDelete, "/item/", nil)
 	r.Header.Set("Content-Type", "application/json")
-	itemService.CreateItem(w, r)
+
+	itemService.GetItemByID(w, r)
 
 	res := w.Result()
 	defer res.Body.Close()
@@ -76,7 +82,7 @@ func TestCreateItemService_JsonErrorFormater(t *testing.T) {
 	}
 }
 
-func TestCreateItemService_ItemError(t *testing.T) {
+func TestGetItemByIDService_ItemError(t *testing.T) {
 	fakeItem := domain.Item{}
 
 	err := faker.FakeData(&fakeItem)
@@ -88,15 +94,23 @@ func TestCreateItemService_ItemError(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockItemUseCase := mocks.NewMockItemUsecase(mockCtrl)
-	mockItemUseCase.EXPECT().Create(fakeItem).Return(nil, fmt.Errorf("Any error"))
+	mockItemUseCase.EXPECT().GetByID(
+		1,
+	).Return(nil, fmt.Errorf("Any item error"))
 
 	itemService := item_service.NewItemService(mockItemUseCase)
 
-	payload, _ := json.Marshal(fakeItem)
 	w := httptest.NewRecorder()
-	r := httptest.NewRequest(http.MethodPost, "/item", strings.NewReader(string(payload)))
+	r := httptest.NewRequest(http.MethodDelete, "/item/", nil)
 	r.Header.Set("Content-Type", "application/json")
-	itemService.CreateItem(w, r)
+
+	vars := map[string]string{
+		"id": "1",
+	}
+
+	r = mux.SetURLVars(r, vars)
+
+	itemService.GetItemByID(w, r)
 
 	res := w.Result()
 	defer res.Body.Close()

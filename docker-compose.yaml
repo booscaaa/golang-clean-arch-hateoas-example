@@ -8,43 +8,74 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - 3333:3333
+    networks:
+      - my-networks
     volumes:
       - ./:/api
 
-  # elasticsearch:
-  #   image: 'docker.elastic.co/elasticsearch/elasticsearch:7.10.2'
-  #   environment:
-  #     - discovery.type=single-node
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - ELASTIC_USERNAME=elastic
-  #     - ELASTIC_PASSWORD=DkIedPPSCb
-  #   ports:
-  #     - "9200:9200"
-  #   volumes:
-  #     - esdata:/usr/share/elasticsearch/data
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.10.2'
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_USERNAME=elastic
+      - ELASTIC_PASSWORD=DkIedPPSCb
+    ports:
+      - "9200:9200"
+    networks:
+      - my-networks
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
 
-  # logstash:
-  #   build:
-  #     context: logstash
-  #   volumes:
-  #     - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-  #     - ./logstash/pipelines/:/usr/share/logstash/pipeline/
-  #     - ./logstash/queries/:/usr/share/logstash/config/queries/
-  #   depends_on:
-  #     - elasticsearch
+  logstash:
+    build:
+      context: logstash
+    volumes:
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./logstash/pipelines/:/usr/share/logstash/pipeline/
+      - ./logstash/queries/:/usr/share/logstash/config/queries/
+    networks:
+      - my-networks
+    depends_on:
+      - elasticsearch
 
-  # kibana:
-  #   image: 'docker.elastic.co/kibana/kibana:7.10.2'
-  #   ports:
-  #     - "5601:5601"
-  #   hostname: kibana
-  #   depends_on:
-  #     - elasticsearch
-  #   volumes:
-  #     - ./kibana:/usr/share/kibana/config/
+  kibana:
+    image: 'docker.elastic.co/kibana/kibana:7.10.2'
+    ports:
+      - "5601:5601"
+    hostname: kibana
+    networks:
+      - my-networks
+    depends_on:
+      - elasticsearch
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.13.0
+    cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
+    cap_drop: ["ALL"]
+    networks:
+      - my-networks
+    ports:
+    - 8200:8200
+    command: >
+       apm-server -e
+         -E apm-server.rum.enabled=true
+         -E setup.kibana.host=kibana:5601
+         -E setup.template.settings.index.number_of_replicas=0
+         -E apm-server.kibana.enabled=true
+         -E apm-server.kibana.host=kibana:5601
+         -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    healthcheck:
+      interval: 10s
+      retries: 12
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8200/
 
 volumes:
   pgdata:
     driver: local
   esdata:
     driver: local
+
+networks:
+  my-networks:
+    driver: bridge

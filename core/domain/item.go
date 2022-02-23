@@ -6,15 +6,18 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/booscaaa/go-hateoas/hateoas"
+	"github.com/spf13/viper"
 )
 
 type Item struct {
-	ID          int       `json:"id" swaggerignore:"true"`
-	Name        string    `json:"name" example:"Tarefa 1"`
-	Description string    `json:"description" example:"Descrição da tarefa 1"`
-	Date        time.Time `json:"date" example:"2021-02-02"`
-	Initials    string    `json:"initials" example:"vin" maxLength:"3"`
-	Links       []Link    `json:"_links"`
+	ID              int       `json:"id" swaggerignore:"true"`
+	Name            string    `json:"name" example:"Tarefa 1"`
+	Description     string    `json:"description" example:"Descrição da tarefa 1"`
+	Date            time.Time `json:"date" example:"2021-02-02"`
+	Initials        string    `json:"initials" example:"vin" maxLength:"3"`
+	hateoas.Hateoas `swaggerignore:"true"`
 }
 
 type ItemUsecase interface {
@@ -49,6 +52,8 @@ func (item *Item) isValid() error {
 }
 
 func NewItem(id int, name string, description string, date time.Time, initials string) (*Item, error) {
+	baseUrl := viper.GetString("hateoas.base")
+
 	item := Item{
 		ID:          id,
 		Name:        name,
@@ -62,12 +67,9 @@ func NewItem(id int, name string, description string, date time.Time, initials s
 		return nil, err
 	}
 
-	hItem, err := item.Hateoas()
-	if err != nil {
-		return nil, err
-	}
+	hateoas.Generate(&item, "item", baseUrl)
 
-	return hItem, nil
+	return &item, nil
 }
 
 func FromJSONItem(body io.Reader) (*Item, error) {
@@ -82,14 +84,4 @@ func FromJSONItem(body io.Reader) (*Item, error) {
 	}
 
 	return &item, nil
-}
-
-func (item *Item) Hateoas() (*Item, error) {
-	if item.ID == 0 {
-		return nil, fmt.Errorf("No item to generate hateoas")
-	}
-
-	item.Links = GenerateHateoasLinks("item", item.ID)
-
-	return item, nil
 }

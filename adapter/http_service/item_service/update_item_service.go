@@ -6,21 +6,23 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http/util"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http_service/util"
+	"github.com/booscaaa/golang-clean-arch-hateoas-example/core/domain"
 	"github.com/gorilla/mux"
 )
 
-// DeleteItem goDoc
-// @Summary Delete item by id
-// @Description Delete item by id
+// UpdateItem goDoc
+// @Summary Update item by id
+// @Description Update item by id
 // @Tags item
 // @Accept  json
 // @Produce  json
+// @Param item body domain.Item true "item"
 // @Param id path int true "1"
 // @Success 200 {object} domain.Item
 // @Security ApiKeyAuth
-// @Router /item/{id} [delete]
-func (service itemService) DeleteItem(response http.ResponseWriter, request *http.Request) {
+// @Router /item/{id} [put]
+func (service itemService) UpdateItem(response http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id, err := strconv.Atoi(vars["id"])
 
@@ -30,7 +32,17 @@ func (service itemService) DeleteItem(response http.ResponseWriter, request *htt
 		return
 	}
 
-	item, err := service.usecase.Delete(id)
+	itemRequest, err := domain.FromJSONItem(request.Body)
+
+	if err != nil {
+		response.WriteHeader(500)
+		json.NewEncoder(response).Encode(util.ResponseMessage(err))
+		return
+	}
+
+	itemRequest.ID = id
+
+	item, err := service.usecase.Update(*itemRequest)
 
 	if err != nil {
 		response.WriteHeader(500)
