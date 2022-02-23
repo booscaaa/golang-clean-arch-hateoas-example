@@ -6,7 +6,7 @@
     <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-red.svg?style=for-the-badge"></a>
     <a href="https://github.com/booscaaa/golang-clean-arch-hateoas-example/actions?query=workflow%3ADeploy"><img alt="Build status" src="https://img.shields.io/github/workflow/status/booscaaa/golang-clean-arch-hateoas-example/Test?style=for-the-badge"></a>
     <a href="https://codecov.io/gh/booscaaa/golang-clean-arch-hateoas-example"><img alt="Coverage" src="https://img.shields.io/codecov/c/github/booscaaa/golang-clean-arch-hateoas-example/master.svg?style=for-the-badge"></a>
-    <a href="https://todo-list-hateoas.herokuapp.com/doc/index.html"><img alt="Swagger docs" src="https://img.shields.io/badge/api docs-swagger-purple?style=for-the-badge"></a>
+    <a href="https://todo-list-hateoas.herokuapp.com/swagger/index.html"><img alt="Swagger docs" src="https://img.shields.io/badge/api docs-swagger-purple?style=for-the-badge"></a>
   </p>
 </p>
 
@@ -116,7 +116,7 @@ mockgen -source=core/domain/item.go -destination=core/domain/mocks/fake_item_rep
 
 ### To access the endpoints documentation
 
-- https://todo-list-hateoas.herokuapp.com/doc/index.html
+- https://todo-list-hateoas.herokuapp.com/swagger/index.html
 
 <br>
 <br>
