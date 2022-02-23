@@ -14,7 +14,7 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 	"go.elastic.co/apm/module/apmgorilla"
 
-	_ "github.com/booscaaa/golang-clean-arch-hateoas-example/adapter/http_service/docs"
+	_ "github.com/booscaaa/golang-clean-arch-hateoas-example/docs"
 )
 
 // @title Clean architecture and Level 3 of REST
