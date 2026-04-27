@@ -12,25 +12,6 @@
 
 <br>
 
-## Why?
-
-This project is part of my personal portfolio, so, I'll be happy if you could provide me any feedback about the project, code, structure or anything that you can report that could make me a better developer!
-
-Email-me: boscardinvinicius@gmail.com
-
-Connect with me at [LinkedIn](https://www.linkedin.com/in/booscaaa/).
-
-<br>
-
-## Functionalities
-
-- Include tasks
-- Delete tasks
-- Change tasks
-- Search tasks
-- Search tasks by acronym
-
-<br>
 
 ## Getting Started
 
@@ -61,7 +42,7 @@ config.json - this is my heroku app
 ```json
 {
   "database": {
-    "url": "postgres://izrykubjdwzynh:d6d5c87ab5b0d734323acc8dc729c3f389f4368c8dc73cbd9be844bce3173fb2@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d6r28h5h9fqrn3"
+    "url": ""
   },
   "hateoas": {
     "base": "https://todo-list-hateoas.herokuapp.com"
@@ -132,19 +113,6 @@ mockgen -source=core/domain/item.go -destination=core/domain/mocks/fake_item_rep
 - [Swaggo](https://github.com/swaggo/http-swagger)
 - [Testfy](https://github.com/stretchr/testify)
 
-<br>
-<br>
-<br>
-
-## Contributing
-
-You can send how many PR's do you want, I'll be glad to analyze and accept them! And if you have any question about the project...
-
-Email-me: boscardinvinicius@gmail.com
-
-Connect with me at [LinkedIn](https://www.linkedin.com/in/booscaaa/)
-
-Thank you!
 
 ## License
 
